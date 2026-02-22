@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sara Marina Chuina - Portfólio Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #1e293b; /* Slate 800 */
+        }
+
+        /* Chart Container Styling as per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+
+        .timeline-node {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .timeline-node:hover, .timeline-node.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutral Tech (Slate/Blue/White) with Green for WhatsApp -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Immediate professional identity and contact (Direct WhatsApp link).
+         2. Interactive Dashboard (Analytics): Visualizing the "Hard Skills", adjusted to reflect Junior/learning status in AdvPL and stronger base in Infra/Security.
+         3. Career Timeline: An interactive vertical timeline allowing users to explore the "Experience" section chronologically, including new Internship data.
+         4. Project Gallery: Cards representing the "Projects" section.
+         5. Education: Clean list for academic credentials.
+    -->
+    <!-- Visualization & Content Choices:
+         - Skills Radar Chart: Adjusted to show a growth trajectory in Dev (AdvPL) while maintaining high admin/infra scores.
+         - Experience Timeline: Added Estágio and updated EDP roles.
+         - Tech Stack Bar Chart: Adjusted weights to reflect current daily focus vs historical focus.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used (using FontAwesome fonts). NO Mermaid JS used. -->
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-slate-800"><i class="fas fa-code text-blue-500 mr-2"></i>Sara Marina</span>
+                </div>
+                <div class="hidden sm:flex items-center space-x-4">
+                    <button onclick="scrollToSection('dashboard')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Visão Geral</button>
+                    <button onclick="scrollToSection('timeline')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Trajetória</button>
+                    <button onclick="scrollToSection('projects')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Projetos</button>
+                    <button onclick="scrollToSection('education')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Formação</button>
+                </div>
+                <!-- Mobile menu button placeholder -->
+                <div class="flex items-center sm:hidden">
+                    <button class="text-slate-500 hover:text-slate-700 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white border-b border-slate-200 py-12 lg:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block p-2 rounded-full bg-blue-100 text-blue-600 mb-4">
+                <i class="fas fa-laptop-code fa-2x"></i>
+            </div>
+            <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+                Sara Marina Chuina de Assis
+            </h1>
+            <p class="mt-4 text-xl text-slate-500 max-w-3xl mx-auto">
+                Analista de Desenvolvimento de Sistemas | Em constante aprendizado com Protheus (AdvPL) & SQL | Segurança da Informação
+            </p>
+            <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                <!-- WhatsApp Button -->
+                <a href="https://wa.me/5527997466945" target="_blank" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                    <i class="fab fa-whatsapp mr-2 fa-lg"></i> WhatsApp
+                </a>
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="inline-flex items-center px-6 py-3 border border-slate-300 text-base font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    <i class="fab fa-linkedin mr-2 text-blue-600"></i> LinkedIn
+                </a>
+                <a href="mailto:saramarinachuina@gmail.com" class="inline-flex items-center px-6 py-3 border border-slate-300 text-base font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    <i class="fas fa-envelope mr-2"></i> E-mail
+                </a>
+            </div>
+            <div class="mt-6 text-slate-400 text-sm">
+                <i class="fas fa-map-marker-alt mr-1"></i> Serra – Espírito Santo, Brasil
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <!-- Section 1: Dashboard / Analytics -->
+        <section id="dashboard" class="py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-slate-900">Visão Geral Técnica</h2>
+                    <p class="mt-2 text-slate-600">Uma análise quantitativa da minha base em infraestrutura e o meu crescimento no desenvolvimento.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Chart 1: Skill Radar -->
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 text-center">Distribuição de Competências</h3>
+                        <p class="text-sm text-slate-500 mb-4 text-center">Base sólida em administração/infra, com foco crescente em código.</p>
+                        <div class="chart-container">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Tech Stack Frequency -->
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4 text-center">Foco Tecnológico Atual</h3>
+                        <p class="text-sm text-slate-500 mb-4 text-center">Ferramentas de maior interação e aprendizado contínuo.</p>
+                        <div class="chart-container">
+                            <canvas id="techChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="flex items-center">
+                            <div class="bg-indigo-100 p-3 rounded-full text-indigo-600 mr-4">
+                                <i class="fas fa-code fa-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Desenvolvimento (Jr.)</h4>
+                                <p class="text-sm text-slate-600">Aperfeiçoando AdvPL e SQL Server no ERP Protheus.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="flex items-center">
+                            <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 mr-4">
+                                <i class="fas fa-shield-alt fa-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Segurança</h4>
+                                <p class="text-sm text-slate-600">HikCentral, Trend Mobile, Gestão de Acessos (MBA em andamento).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="flex items-center">
+                            <div class="bg-amber-100 p-3 rounded-full text-amber-600 mr-4">
+                                <i class="fas fa-network-wired fa-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Infraestrutura base</h4>
+                                <p class="text-sm text-slate-600">Active Directory, Redes (Cisco/Dell), Suporte de TI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Interactive Timeline -->
+        <section id="timeline" class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900">Trajetória Profissional</h2>
+                    <p class="mt-2 text-slate-600">Acompanhe minha evolução desde o apoio administrativo até o desenvolvimento de sistemas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Timeline Visual -->
+                    <div class="lg:col-span-1 relative h-[600px] flex flex-col justify-between items-center py-4">
+                        <div class="timeline-line"></div>
+                        <!-- Nodes generated by JS will go here -->
+                        <div id="timeline-nodes-container" class="w-full h-full flex flex-col justify-between items-center relative">
+                            <!-- JS Injection -->
+                        </div>
+                    </div>
+
+                    <!-- Detail Panel -->
+                    <div class="lg:col-span-2">
+                        <div id="timeline-detail-panel" class="h-full bg-slate-50 border border-slate-200 rounded-xl p-8 flex flex-col justify-center transition-all duration-500 opacity-100">
+                            <!-- Dynamic Content -->
+                            <div class="text-slate-400 text-center">
+                                <i class="fas fa-mouse-pointer fa-3x mb-4"></i>
+                                <p>Selecione uma etapa na linha do tempo ao lado para ver os detalhes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Project Portfolio -->
+        <section id="projects" class="py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900">Atuação & Desafios</h2>
+                    <p class="mt-2 text-slate-600">Como aplico meu aprendizado e experiência no dia a dia corporativo.</p>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="flex justify-center flex-wrap gap-4 mb-10">
+                    <button class="filter-btn active px-4 py-2 rounded-full bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition text-sm font-medium" data-filter="all">Todos</button>
+                    <button class="filter-btn px-4 py-2 rounded-full bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition text-sm font-medium" data-filter="dev">Desenvolvimento</button>
+                    <button class="filter-btn px-4 py-2 rounded-full bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition text-sm font-medium" data-filter="data">Dados/SQL</button>
+                    <button class="filter-btn px-4 py-2 rounded-full bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition text-sm font-medium" data-filter="infra">Infra & Segurança</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="projects-grid">
+                    <!-- Projects injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Education -->
+        <section id="education" class="py-12 bg-white border-t border-slate-200">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-slate-900 text-center mb-10">Formação Acadêmica</h2>
+                <div class="space-y-6">
+                    <div class="flex flex-col md:flex-row items-start md:items-center bg-slate-50 p-6 rounded-lg border-l-4 border-blue-500 shadow-sm hover:shadow-md transition">
+                        <div class="bg-white p-3 rounded-full shadow-sm text-blue-600 mr-6 mb-4 md:mb-0">
+                            <i class="fas fa-user-shield fa-xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-800">MBA em Segurança da Informação</h3>
+                            <p class="text-slate-600">Faculdade Descomplica</p>
+                        </div>
+                        <div class="text-slate-500 font-medium mt-2 md:mt-0">
+                            Conclusão: 09/2025
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-start md:items-center bg-slate-50 p-6 rounded-lg border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition">
+                        <div class="bg-white p-3 rounded-full shadow-sm text-indigo-600 mr-6 mb-4 md:mb-0">
+                            <i class="fas fa-laptop-code fa-xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-800">Bacharelado em Sistemas de Informação</h3>
+                            <p class="text-slate-600">Faculdade Descomplica</p>
+                        </div>
+                        <div class="text-slate-500 font-medium mt-2 md:mt-0">
+                            Conclusão: 07/2025
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-start md:items-center bg-slate-50 p-6 rounded-lg border-l-4 border-slate-400 shadow-sm hover:shadow-md transition">
+                        <div class="bg-white p-3 rounded-full shadow-sm text-slate-600 mr-6 mb-4 md:mb-0">
+                            <i class="fas fa-chart-pie fa-xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-slate-800">Bacharelado em Administração</h3>
+                            <p class="text-slate-600">Estácio</p>
+                        </div>
+                        <div class="text-slate-500 font-medium mt-2 md:mt-0">
+                            Concluído: 12/2022
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-light text-slate-400">&copy; 2025 Sara Marina Chuina de Assis. Todos os direitos reservados.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="https://wa.me/5527997466945" target="_blank" class="text-slate-400 hover:text-green-400 transition" title="WhatsApp"><i class="fab fa-whatsapp fa-lg"></i></a>
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="text-slate-400 hover:text-blue-400 transition" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+                <a href="mailto:saramarinachuina@gmail.com" class="text-slate-400 hover:text-white transition" title="E-mail"><i class="fas fa-envelope fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // --- DATA STORE ---
+        const profileData = {
+            experience: [
+                {
+                    id: 1,
+                    role: "Analista de Desenvolvimento de Sistemas",
+                    company: "Biancogres Grupo",
+                    period: "Junho 2025 - Atual",
+                    icon: "fas fa-code",
+                    color: "bg-blue-600",
+                    description: "Foco na customização e manutenção do ecossistema ERP Protheus. Em constante aprendizado e desenvolvimento de rotinas em AdvPL, otimização de consultas SQL Server e análise de requisitos técnicos.",
+                    details: [
+                        "Aprendizado e desenvolvimento de rotinas customizadas em AdvPL.",
+                        "Criação e otimização de consultas SQL para relatórios.",
+                        "Análise de requisitos para melhorias sistêmicas.",
+                        "Suporte em demandas administrativas do setor."
+                    ]
+                },
+                {
+                    id: 2,
+                    role: "Analista de Infraestrutura de TI",
+                    company: "Biancogres Grupo",
+                    period: "Nov 2023 - Jun 2025",
+                    icon: "fas fa-network-wired",
+                    color: "bg-teal-600",
+                    description: "Administração de ambientes críticos. Gestão de Active Directory, apoio em Switches (Dell/Cisco), segurança de dispositivos (Trend Mobile) e monitoramento de CFTV (HikCentral).",
+                    details: [
+                        "Gestão de usuários no Active Directory e suporte VPN Checkpoint.",
+                        "Apoio na configuração de switches Dell e Cisco.",
+                        "Monitoramento de segurança via HikCentral.",
+                        "Atendimento de tickets de suporte via Movidesk."
+                    ]
+                },
+                {
+                    id: 3,
+                    role: "Assistente Administrativo / Recepção",
+                    company: "Biancogres Grupo",
+                    period: "Abr 2021 - Nov 2023",
+                    icon: "fas fa-file-invoice-dollar",
+                    color: "bg-slate-500",
+                    description: "Progressão de Recepcionista para Assistente Administrativo. Gestão de despesas (GMCD), contratos, controle de acesso e planejamento de implantação de CFTV.",
+                    details: [
+                        "Gestão de pacotes de despesas administrativas e gerais.",
+                        "Acompanhamento de metas, KPIs e orçamento.",
+                        "Planejamento de implantação do sistema de CFTV na indústria.",
+                        "Controle de acesso de funcionários através do Sistema Senior."
+                    ]
+                },
+                {
+                    id: 4,
+                    role: "Estagiária",
+                    company: "Biancogres Grupo",
+                    period: "Jun 2020 - Abr 2021",
+                    icon: "fas fa-id-badge",
+                    color: "bg-slate-400",
+                    description: "Primeiros passos no Grupo Biancogres focados em processos e controle.",
+                    details: [
+                        "Supervisão e regulamentação de acessos de terceiros.",
+                        "Monitoramento e administração de incidentes nas instalações.",
+                        "Abertura e acompanhamento de chamados internos."
+                    ]
+                },
+                {
+                    id: 5,
+                    role: "Apoio Administrativo / Menor Aprendiz",
+                    company: "EDP Brasil",
+                    period: "Ago 2018 - Ago 2020",
+                    icon: "fas fa-seedling",
+                    color: "bg-amber-500",
+                    description: "Início da trajetória profissional, adquirindo vivência corporativa com sistemas de gestão empresarial.",
+                    details: [
+                        "Lançamento de Notas Fiscais de materiais e serviços no SAP.",
+                        "Análise financeira e tratamento de anomalias de pagamentos.",
+                        "Organização de arquivos e apoio administrativo geral."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    id: "p1",
+                    title: "Curva de Aprendizado em Protheus",
+                    category: "dev",
+                    icon: "fas fa-cogs",
+                    tech: ["AdvPL", "Protheus", "Lógica"],
+                    summary: "Estudo e aplicação prática em rotinas customizadas, ecrãs e gatilhos para compreender os processos internos do ERP.",
+                    impact: "Apoio na tradução de requisitos sistêmicos através de desenvolvimento em linguagem proprietária (AdvPL)."
+                },
+                {
+                    id: "p2",
+                    title: "Extração de Dados & SQL",
+                    category: "data",
+                    icon: "fas fa-database",
+                    tech: ["SQL Server", "Dados", "Relatórios"],
+                    summary: "Criação de consultas para extração de informações estratégicas e suporte a relatórios do setor.",
+                    impact: "Fornecimento de dados organizados para a gestão e acompanhamento de indicadores."
+                },
+                {
+                    id: "p3",
+                    title: "Suporte de Infraestrutura",
+                    category: "infra",
+                    icon: "fas fa-server",
+                    tech: ["Active Directory", "VPN", "Cisco/Dell"],
+                    summary: "Apoio na administração de ambientes, gestão de acessos VPN Checkpoint e resolução de chamados.",
+                    impact: "Garantia de que as operações diárias dos colaboradores fluam com segurança e estabilidade."
+                },
+                {
+                    id: "p4",
+                    title: "Monitoramento & Segurança CFTV",
+                    category: "infra",
+                    icon: "fas fa-camera",
+                    tech: ["HikCentral", "Trend Mobile", "Projetos"],
+                    summary: "Participação no planejamento de implantação de CFTV e gestão de dispositivos corporativos.",
+                    impact: "Auxílio direto na proteção do parque tecnológico da indústria contra anomalias."
+                }
+            ]
+        };
+
+        // --- CHART GENERATION ---
+        function initCharts() {
+            // Radar Chart: Skills (Adjusted to reflect Junior Dev status & high Infra/Admin base)
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctxSkills, {
+                type: 'radar',
+                data: {
+                    labels: ['Desenvolvimento (AdvPL)', 'Banco de Dados (SQL)', 'Infra & Redes', 'Segurança da Info', 'Gestão/Admin', 'ERP (Protheus)'],
+                    datasets: [{
+                        label: 'Nível Base/Foco',
+                        data: [50, 65, 80, 85, 90, 60], // Lower Dev/Protheus to reflect Junior, high Admin/Security
+                        fill: true,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(59, 130, 246)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            pointLabels: {
+                                font: { size: 11, family: 'Inter', weight: '600' },
+                                color: '#475569'
+                            },
+                            ticks: { display: false, max: 100, min: 0 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Foco / Base: ' + context.raw;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Bar Chart: Tech Stack Focus
+            const ctxTech = document.getElementById('techChart').getContext('2d');
+            new Chart(ctxTech, {
+                type: 'bar',
+                data: {
+                    labels: ['SQL Server', 'AdvPL (Em aprendizado)', 'Active Directory', 'HikCentral / Trend', 'SAP / Senior'],
+                    datasets: [{
+                        label: 'Frequência de Uso Recente',
+                        data: [75, 65, 80, 85, 50], 
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)', // Blue for Data
+                            'rgba(59, 130, 246, 0.8)', // Blue for Dev
+                            'rgba(245, 158, 11, 0.8)', // Amber for Infra
+                            'rgba(16, 185, 129, 0.8)', // Emerald for Security
+                            'rgba(100, 116, 139, 0.8)', // Slate for ERP Admin
+                        ],
+                        borderRadius: 4,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal bar chart
+                    scales: {
+                        x: { display: false, max: 100 },
+                        y: { 
+                            grid: { display: false },
+                            ticks: { font: { family: 'Inter', weight: '500' }, color: '#334155' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Intensidade: ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- TIMELINE LOGIC ---
+        function renderTimeline() {
+            const container = document.getElementById('timeline-nodes-container');
+            const detailPanel = document.getElementById('timeline-detail-panel');
+            
+            // Clear existing
+            container.innerHTML = '';
+
+            profileData.experience.forEach((job, index) => {
+                const node = document.createElement('div');
+                node.className = `timeline-node w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute`;
+                
+                // Distribute nodes equally vertically
+                let topPos = 0;
+                if(profileData.experience.length > 1) {
+                    topPos = (index / (profileData.experience.length - 1)) * 90; // 90% to keep inside padding
+                }
+                
+                node.style.top = `${topPos}%`;
+                node.innerHTML = `<i class="${job.icon}"></i>`;
+                
+                // Click Event
+                node.addEventListener('click', () => {
+                    // Update Active Class
+                    document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active', 'ring-4', 'ring-white'));
+                    node.classList.add('active', 'ring-4', 'ring-white');
+                    
+                    // Update Details Panel with Fade effect
+                    detailPanel.style.opacity = '0';
+                    setTimeout(() => {
+                        detailPanel.innerHTML = `
+                            <div class="flex items-center mb-4">
+                                <div class="p-3 rounded-full ${job.color} text-white mr-4 shadow-sm">
+                                    <i class="${job.icon} fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-slate-800">${job.role}</h3>
+                                    <p class="text-blue-600 font-medium">${job.company}</p>
+                                    <p class="text-sm text-slate-500">${job.period}</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-700 mb-6 leading-relaxed">${job.description}</p>
+                            <h4 class="font-semibold text-slate-800 mb-2">Principais Atividades:</h4>
+                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
+                        `;
+                        detailPanel.style.opacity = '1';
+                    }, 300);
+                });
+
+                container.appendChild(node);
+            });
+
+            // Trigger first click automatically
+            setTimeout(() => {
+                container.children[0].click();
+            }, 500);
+        }
+
+        // --- PROJECTS LOGIC ---
+        function renderProjects(filter = 'all') {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' 
+                ? profileData.projects 
+                : profileData.projects.filter(p => p.category === filter);
+
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col";
+                card.innerHTML = `
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
+                                <i class="${project.icon} fa-xl"></i>
+                            </div>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-500 text-xs rounded uppercase font-bold tracking-wide">${project.category === 'dev' ? 'Dev (Aprendizado)' : project.category === 'data' ? 'Dados' : 'Infra'}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">${project.title}</h3>
+                        <p class="text-slate-600 mb-4 text-sm">${project.summary}</p>
+                        <div class="mb-4">
+                            <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Impacto / Foco</h4>
+                            <p class="text-sm text-slate-700 border-l-2 border-blue-500 pl-3">${project.impact}</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 px-6 py-4 border-t border-slate-100">
+                        <div class="flex flex-wrap gap-2">
+                            ${project.tech.map(t => `<span class="inline-block px-2 py-1 text-xs font-medium bg-white border border-slate-200 rounded text-slate-600">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setupFilters() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Toggle active styles
+                    buttons.forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white', 'border-transparent');
+                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+                    });
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+
+                    renderProjects(btn.dataset.filter);
+                });
+            });
+            // Set first active
+            buttons[0].click(); 
+        }
+
+        // --- UTILS ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            renderTimeline();
+            setupFilters();
+        });
+
+    </script>
+</body>
+</html>
