@@ -8,13 +8,40 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background-color: #020617; /* slate-950 - Fundo mais profundo */
+            color: #f8fafc; /* slate-50 */
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(60px);
+        }
+        .ambient-glow-2 {
+            position: absolute;
+            top: 40%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(79,70,229,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(80px);
         }
 
         .chart-container {
@@ -25,6 +52,7 @@
             margin-right: auto;
             height: 300px;
             max-height: 400px;
+            z-index: 10;
         }
 
         @media (min-width: 768px) {
@@ -33,180 +61,276 @@
             }
         }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        /* Premium Glass Panel */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6); /* slate-900 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700 */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.5); /* blue-500 */
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+            transform: translateY(-4px);
         }
 
         .timeline-line {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
+            width: 2px;
             height: 100%;
-            background-color: #e2e8f0;
+            background: linear-gradient(to bottom, transparent, #3b82f6, #6366f1, transparent);
             z-index: 0;
+            opacity: 0.5;
         }
 
         .timeline-node {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             z-index: 10;
         }
 
-        .timeline-node:hover, .timeline-node.active {
-            transform: scale(1.2);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        .timeline-node.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            border-color: #60a5fa !important;
         }
 
         .nav-item {
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #60a5fa;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after, .nav-item.active::after {
+            width: 70%;
         }
 
         .nav-item.active {
-            background-color: #eff6ff;
-            color: #2563eb;
+            color: #60a5fa; /* blue-400 */
             font-weight: 600;
         }
 
-        /* Scroll Animations base classes */
+        /* Scroll Animations */
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Typing cursor effect */
         .typing-cursor::after {
             content: '|';
             animation: blink 1s step-end infinite;
+            color: #60a5fa;
+            font-weight: 300;
         }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* Pulse ring for Avatar */
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            animation: pulse 3s infinite cubic-bezier(0.66, 0, 0, 1);
+            z-index: -1;
+        }
+        @keyframes pulse {
+            to { box-shadow: 0 0 0 45px rgba(59, 130, 246, 0); }
+        }
+
+        /* Dark Mode Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #020617;
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #1e293b;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #3b82f6;
+        }
+
+        /* Text Gradient Animation */
+        .text-gradient-animate {
+            background: linear-gradient(to right, #60a5fa, #a78bfa, #60a5fa);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col relative">
+<body class="antialiased min-h-screen flex flex-col relative selection:bg-blue-500/30 selection:text-blue-200">
+
+    <!-- Global Ambient Lights -->
+    <div class="ambient-glow-1 fixed"></div>
+    <div class="ambient-glow-2 fixed"></div>
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm transition-all duration-300">
+    <nav class="fixed w-full top-0 z-50 bg-[#020617]/80 backdrop-blur-md border-b border-slate-800/80 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-xl font-bold text-slate-800"><i class="fas fa-code text-blue-500 mr-2"></i>Sara Marina</span>
+                <div class="flex items-center group cursor-pointer" onclick="scrollToSection('hero')">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-3 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all">
+                        <i class="fas fa-code text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white tracking-tight">Sara Marina</span>
                 </div>
                 <!-- Desktop Menu -->
-                <div class="hidden sm:flex items-center space-x-2">
-                    <button onclick="scrollToSection('hero')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Início</button>
-                    <button onclick="scrollToSection('dashboard')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Visão Geral</button>
-                    <button onclick="scrollToSection('timeline')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Trajetória</button>
-                    <button onclick="scrollToSection('projects')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Projetos</button>
-                    <button onclick="scrollToSection('education')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Formação</button>
+                <div class="hidden sm:flex items-center space-x-1">
+                    <button onclick="scrollToSection('hero')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Início</button>
+                    <button onclick="scrollToSection('dashboard')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Análise Técnica</button>
+                    <button onclick="scrollToSection('timeline')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Trajetória</button>
+                    <button onclick="scrollToSection('projects')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Projetos</button>
+                    <button onclick="scrollToSection('education')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Formação</button>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-500 hover:text-slate-700 focus:outline-none p-2 rounded-md hover:bg-slate-100">
+                    <button id="mobile-menu-btn" class="text-slate-400 hover:text-white focus:outline-none p-2 rounded-md hover:bg-slate-800 transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-slate-100 shadow-lg absolute w-full">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <button onclick="scrollToSection('hero'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Início</button>
-                <button onclick="scrollToSection('dashboard'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Visão Geral</button>
-                <button onclick="scrollToSection('timeline'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Trajetória</button>
-                <button onclick="scrollToSection('projects'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Projetos</button>
-                <button onclick="scrollToSection('education'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50">Formação</button>
+        <div id="mobile-menu" class="sm:hidden hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl absolute w-full">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <button onclick="scrollToSection('hero'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Início</button>
+                <button onclick="scrollToSection('dashboard'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Análise Técnica</button>
+                <button onclick="scrollToSection('timeline'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Trajetória</button>
+                <button onclick="scrollToSection('projects'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Projetos</button>
+                <button onclick="scrollToSection('education'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Formação</button>
             </div>
         </div>
     </nav>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/5527997466945" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 z-50 animate-bounce" style="animation-duration: 3s;" title="Fale comigo no WhatsApp">
-        <i class="fab fa-whatsapp text-3xl"></i>
+    <a href="https://wa.me/5527997466945" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:bg-emerald-400 hover:scale-110 transition-all duration-300 z-50 group" title="Fale comigo no WhatsApp">
+        <div class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-20 group-hover:opacity-40"></div>
+        <i class="fab fa-whatsapp text-3xl relative z-10"></i>
     </a>
 
-    <!-- Hero Section (Updated with Photo) -->
-    <header id="hero" class="bg-white border-b border-slate-200 py-16 lg:py-24 overflow-hidden relative">
-        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:20px_20px]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
+    <!-- Hero Section -->
+    <header id="hero" class="pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden relative">
+        <!-- Dot pattern background -->
+        <div class="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             
-            <!-- Profile Photo Integration -->
-            <img src="avatar-cartoon.png" alt="Avatar Cartoon de Sara Marina Chuina" class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-lg bg-blue-50">
+            <!-- Profile Photo Integration with Pulse Ring -->
+            <div class="relative inline-block mx-auto mb-8 animate-on-scroll">
+                <div class="pulse-ring"></div>
+                <img src="avatar-cartoon.png" alt="Avatar Cartoon de Sara Marina Chuina" class="relative z-10 w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-slate-800 shadow-[0_0_30px_rgba(59,130,246,0.3)] bg-slate-800">
+                <div class="absolute -bottom-2 -right-2 bg-blue-600 w-10 h-10 rounded-full border-4 border-[#020617] flex items-center justify-center z-20" title="Desenvolvedora">
+                    <i class="fas fa-code text-white text-sm"></i>
+                </div>
+            </div>
 
-            <h1 class="text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl mb-4">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            <h1 class="text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-7xl mb-6 text-white animate-on-scroll" style="transition-delay: 100ms;">
+                <span class="text-gradient-animate">
                     Sara Marina Chuina
                 </span>
             </h1>
-            <p class="mt-4 text-xl text-slate-600 max-w-3xl mx-auto font-light h-14 flex justify-center items-center">
+            <p class="mt-4 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto font-light h-16 flex justify-center items-center animate-on-scroll" style="transition-delay: 200ms;">
                 <span id="typing-text" class="typing-cursor"></span>
             </p>
-            <div class="mt-10 flex justify-center gap-4 flex-wrap">
-                <a href="https://wa.me/5527997466945" target="_blank" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-green-500 hover:bg-green-600 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                    <i class="fab fa-whatsapp mr-2 fa-lg"></i> WhatsApp
+            
+            <div class="mt-10 flex justify-center gap-4 flex-wrap animate-on-scroll" style="transition-delay: 300ms;">
+                <a href="https://wa.me/5527997466945" target="_blank" class="inline-flex items-center px-6 py-3.5 border border-transparent text-sm sm:text-base font-medium rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] text-white bg-emerald-600 hover:bg-emerald-500 hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-whatsapp mr-2 text-lg"></i> Falar no WhatsApp
                 </a>
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="inline-flex items-center px-6 py-3 border border-slate-300 text-base font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                    <i class="fab fa-linkedin mr-2 text-blue-600"></i> LinkedIn
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="inline-flex items-center px-6 py-3.5 border border-slate-700 text-sm sm:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300">
+                    <i class="fab fa-linkedin mr-2 text-blue-400 text-lg"></i> LinkedIn
                 </a>
-                <a href="mailto:saramarinachuina@gmail.com" class="inline-flex items-center px-6 py-3 border border-slate-300 text-base font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                    <i class="fas fa-envelope mr-2"></i> E-mail
+                <a href="mailto:saramarinachuina@gmail.com" class="inline-flex items-center px-6 py-3.5 border border-slate-700 text-sm sm:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.15)] hover:-translate-y-1 transition-all duration-300">
+                    <i class="fas fa-envelope mr-2 text-red-400 text-lg"></i> E-mail
                 </a>
             </div>
-            <div class="mt-8 text-slate-400 text-sm font-medium">
-                <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> Serra – Espírito Santo, Brasil
+            
+            <div class="mt-10 text-slate-500 text-sm font-medium animate-on-scroll" style="transition-delay: 400ms;">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700/50">
+                    <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Serra, Espírito Santo - Brasil
+                </span>
             </div>
         </div>
+        
+        <!-- Subtle bottom gradient separator -->
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
     </header>
 
-    <main class="flex-grow">
+    <main class="flex-grow relative z-10">
         
         <!-- Section 1: Dashboard / Analytics -->
-        <section id="dashboard" class="py-16 bg-slate-50">
+        <section id="dashboard" class="py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 animate-on-scroll">
-                    <h2 class="text-3xl font-bold text-slate-900">Visão Geral Técnica</h2>
-                    <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
-                    <p class="mt-4 text-slate-600 max-w-2xl mx-auto">Uma análise quantitativa da minha base sólida em infraestrutura e o meu crescimento acelerado no desenvolvimento de sistemas.</p>
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Métricas de Competência</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Análise Técnica</h3>
+                    <p class="mt-4 text-slate-400 max-w-2xl mx-auto text-lg font-light">Evolução quantitativa da minha base em infraestrutura e o crescimento focado no desenvolvimento de sistemas corporativos.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                     <!-- Chart 1: Skill Radar -->
-                    <div class="glass-panel p-6 rounded-2xl animate-on-scroll delay-100 hover:shadow-lg transition-shadow">
-                        <div class="flex items-center justify-center mb-4">
-                            <i class="fas fa-spider text-blue-500 mr-2"></i>
-                            <h3 class="text-lg font-semibold text-slate-800">Distribuição de Competências</h3>
+                    <div class="glass-card p-8 rounded-2xl animate-on-scroll">
+                        <div class="flex items-center mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mr-4">
+                                <i class="fas fa-spider text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Distribuição de Skills</h3>
+                                <p class="text-xs text-slate-400">Equilíbrio entre bases de infra e foco em código</p>
+                            </div>
                         </div>
-                        <p class="text-sm text-slate-500 mb-6 text-center">Base sólida em administração/infra, com foco crescente em código.</p>
                         <div class="chart-container">
                             <canvas id="skillsChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Chart 2: Tech Stack Frequency -->
-                    <div class="glass-panel p-6 rounded-2xl animate-on-scroll delay-200 hover:shadow-lg transition-shadow">
-                        <div class="flex items-center justify-center mb-4">
-                            <i class="fas fa-layer-group text-blue-500 mr-2"></i>
-                            <h3 class="text-lg font-semibold text-slate-800">Foco Tecnológico Atual</h3>
+                    <div class="glass-card p-8 rounded-2xl animate-on-scroll" style="transition-delay: 100ms;">
+                        <div class="flex items-center mb-6">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mr-4">
+                                <i class="fas fa-layer-group text-indigo-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Ecossistema Tecnológico</h3>
+                                <p class="text-xs text-slate-400">Ferramentas de maior interação no momento</p>
+                            </div>
                         </div>
-                        <p class="text-sm text-slate-500 mb-6 text-center">Ferramentas de maior interação e aprendizado contínuo.</p>
                         <div class="chart-container">
                             <canvas id="techChart"></canvas>
                         </div>
@@ -214,56 +338,52 @@
                 </div>
 
                 <!-- Summary Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-on-scroll delay-300">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex items-start">
-                            <div class="bg-indigo-50 p-4 rounded-xl text-indigo-600 mr-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-on-scroll" style="transition-delay: 200ms;">
+                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                        <div class="flex flex-col">
+                            <div class="w-12 h-12 rounded-xl bg-blue-900/30 border border-blue-800/50 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]">
                                 <i class="fas fa-code fa-lg"></i>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 mb-1">Desenvolvimento (Jr.)</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Aperfeiçoando AdvPL e SQL Server no ERP Protheus para automação e relatórios.</p>
-                            </div>
+                            <h4 class="text-lg font-bold text-white mb-2">Desenvolvimento</h4>
+                            <p class="text-sm text-slate-400 font-light leading-relaxed">Automação, gatilhos e relatórios através do aperfeiçoamento constante em AdvPL e SQL Server no ERP Protheus.</p>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex items-start">
-                            <div class="bg-emerald-50 p-4 rounded-xl text-emerald-600 mr-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                        <div class="flex flex-col">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-900/30 border border-indigo-800/50 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] group-hover:shadow-[0_0_25px_rgba(99,102,241,0.5)]">
                                 <i class="fas fa-shield-alt fa-lg"></i>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 mb-1">Segurança</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Gestão de acessos, HikCentral, Trend Mobile (Aprimorando com MBA).</p>
-                            </div>
+                            <h4 class="text-lg font-bold text-white mb-2">Segurança</h4>
+                            <p class="text-sm text-slate-400 font-light leading-relaxed">Aprimoramento via MBA. Prática em gestão de acessos corporativos, HikCentral e Trend Mobile.</p>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
-                        <div class="flex items-start">
-                            <div class="bg-amber-50 p-4 rounded-xl text-amber-600 mr-4 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                        <div class="flex flex-col">
+                            <div class="w-12 h-12 rounded-xl bg-amber-900/30 border border-amber-800/50 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]">
                                 <i class="fas fa-network-wired fa-lg"></i>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 mb-1">Infraestrutura Base</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Sustentação de redes, Active Directory, Switches (Cisco/Dell) e Suporte de TI.</p>
-                            </div>
+                            <h4 class="text-lg font-bold text-white mb-2">Infraestrutura Base</h4>
+                            <p class="text-sm text-slate-400 font-light leading-relaxed">Experiência consolidada em sustentação de redes, Active Directory, Switches (Cisco/Dell) e Suporte de TI crítico.</p>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
         <!-- Section 2: Interactive Timeline -->
-        <section id="timeline" class="py-16 bg-white relative">
+        <section id="timeline" class="py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16 animate-on-scroll">
-                    <h2 class="text-3xl font-bold text-slate-900">Trajetória Profissional</h2>
-                    <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
-                    <p class="mt-4 text-slate-600">Acompanhe a minha evolução desde o apoio administrativo até ao desenvolvimento de sistemas.</p>
+                    <h2 class="text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Histórico</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Trajetória Profissional</h3>
+                    <p class="mt-4 text-slate-400 text-lg font-light max-w-2xl mx-auto">A jornada desde o apoio administrativo inicial até à atuação técnica em infraestrutura e desenvolvimento.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     <!-- Timeline Visual -->
-                    <div class="lg:col-span-4 relative h-[500px] flex flex-col justify-between items-center py-4 animate-on-scroll">
+                    <div class="lg:col-span-4 relative h-[550px] flex flex-col justify-between items-center py-6 animate-on-scroll">
                         <div class="timeline-line"></div>
                         <div id="timeline-nodes-container" class="w-full h-full flex flex-col justify-between items-center relative">
                             <!-- JS Injection -->
@@ -271,86 +391,127 @@
                     </div>
 
                     <!-- Detail Panel -->
-                    <div class="lg:col-span-8 animate-on-scroll delay-200">
-                        <div id="timeline-detail-panel" class="h-full bg-slate-50 border border-slate-200 rounded-2xl p-8 md:p-10 flex flex-col justify-center transition-all duration-500 opacity-100 shadow-sm relative overflow-hidden">
+                    <div class="lg:col-span-8 animate-on-scroll" style="transition-delay: 200ms;">
+                        <div id="timeline-detail-panel" class="h-full glass-card rounded-2xl p-8 md:p-10 flex flex-col justify-center transition-all duration-500 opacity-100 relative overflow-hidden">
                             <!-- Decorative background -->
-                            <div class="absolute -right-20 -top-20 opacity-5">
-                                <i class="fas fa-briefcase fa-10x"></i>
+                            <div class="absolute -right-20 -top-20 opacity-[0.03]">
+                                <i class="fas fa-layer-group fa-10x text-white"></i>
                             </div>
                             <!-- Dynamic Content -->
-                            <div class="text-slate-400 text-center relative z-10">
-                                <i class="fas fa-mouse-pointer fa-3x mb-4 animate-pulse"></i>
-                                <p class="text-lg">Selecione uma etapa na linha do tempo para ver os detalhes.</p>
+                            <div class="text-slate-500 text-center relative z-10 flex flex-col items-center justify-center h-full">
+                                <div class="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-6 animate-pulse">
+                                    <i class="fas fa-hand-pointer fa-2xl text-blue-500/50"></i>
+                                </div>
+                                <p class="text-lg font-light">Selecione um ponto na linha do tempo ao lado para explorar os detalhes e responsabilidades de cada fase.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
         <!-- Section 3: Project Portfolio -->
-        <section id="projects" class="py-16 bg-slate-50">
+        <section id="projects" class="py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 animate-on-scroll">
-                    <h2 class="text-3xl font-bold text-slate-900">Atuação & Desafios</h2>
-                    <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
-                    <p class="mt-4 text-slate-600">Como aplico o meu aprendizado e experiência no dia a dia corporativo.</p>
+                    <h2 class="text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Portfólio</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Atuação & Desafios</h3>
+                    <p class="mt-4 text-slate-400 text-lg font-light">Como transformo aprendizado teórico e experiência técnica em soluções aplicadas no ecossistema corporativo.</p>
                 </div>
 
                 <!-- Filter Controls -->
-                <div class="flex justify-center flex-wrap gap-3 mb-12 animate-on-scroll delay-100">
-                    <button class="filter-btn active px-5 py-2.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition shadow-sm text-sm font-semibold" data-filter="all">Todos</button>
-                    <button class="filter-btn px-5 py-2.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition shadow-sm text-sm font-semibold" data-filter="dev">Desenvolvimento</button>
-                    <button class="filter-btn px-5 py-2.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition shadow-sm text-sm font-semibold" data-filter="data">Dados/SQL</button>
-                    <button class="filter-btn px-5 py-2.5 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition shadow-sm text-sm font-semibold" data-filter="infra">Infra & Segurança</button>
+                <div class="flex justify-center flex-wrap gap-3 mb-12 animate-on-scroll" style="transition-delay: 100ms;">
+                    <button class="filter-btn active px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="all">Todas as Áreas</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="dev">Desenvolvimento</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="data">Dados/SQL</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="infra">Infra & Segurança</button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="projects-grid">
                     <!-- Projects injected by JS -->
                 </div>
             </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
         <!-- Section 4: Education -->
-        <section id="education" class="py-16 bg-white border-t border-slate-200">
+        <section id="education" class="py-20 relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 animate-on-scroll">
-                    <h2 class="text-3xl font-bold text-slate-900">Formação Acadêmica</h2>
-                    <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                <div class="text-center mb-16 animate-on-scroll">
+                    <h2 class="text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Conhecimento</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Formação Acadêmica</h3>
                 </div>
                 
-                <div class="space-y-6 relative before:absolute before:inset-0 before:ml-10 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
+                <div class="space-y-8 relative before:absolute before:inset-0 before:ml-10 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-blue-600/20 before:via-indigo-500/50 before:to-transparent">
                     
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-white bg-blue-100 text-blue-600 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white">
-                            <i class="fas fa-user-shield fa-2x"></i>
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]">
+                            <i class="fas fa-code-branch fa-2x"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8">
-                            <h3 class="text-xl font-bold text-slate-800">MBA em Segurança da Informação</h3>
-                            <p class="text-blue-600 font-medium mt-1">Faculdade Descomplica</p>
-                            <p class="text-slate-500 text-sm mt-3 flex items-center"><i class="far fa-calendar-alt mr-2"></i>Conclusão: Setembro 2025</p>
+                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                            <div class="mb-2">
+                                <span class="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-1">MBA em Engenharia de Software</h3>
+                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-calendar-alt mr-3 text-blue-400 fa-lg"></i>
+                                Previsão de conclusão: <strong class="ml-1 text-white">08/2026</strong>
+                            </p>
                         </div>
                     </div>
 
-                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll delay-100">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-white bg-indigo-100 text-indigo-600 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white">
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 100ms;">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]">
+                            <i class="fas fa-shield-alt fa-2x"></i>
+                        </div>
+                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                            <div class="mb-2">
+                                <span class="inline-block px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-1">MBA em Segurança da Informação</h3>
+                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
+                                Concluído: <strong class="ml-1 text-white">Setembro 2025</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 200ms;">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-indigo-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(79,70,229,0.6)]">
                             <i class="fas fa-laptop-code fa-2x"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8">
-                            <h3 class="text-xl font-bold text-slate-800">Bacharelado em Sistemas de Informação</h3>
-                            <p class="text-indigo-600 font-medium mt-1">Faculdade Descomplica</p>
-                            <p class="text-slate-500 text-sm mt-3 flex items-center"><i class="far fa-calendar-alt mr-2"></i>Conclusão: Julho 2025</p>
+                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                            <div class="mb-2">
+                                <span class="inline-block px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold rounded-full uppercase tracking-wider">Graduação</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-1">Bacharelado em Sistemas de Informação</h3>
+                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
+                                Concluído: <strong class="ml-1 text-white">Julho 2025</strong>
+                            </p>
                         </div>
                     </div>
 
-                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll delay-200">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-white bg-slate-100 text-slate-600 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110 group-hover:bg-slate-600 group-hover:text-white">
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 300ms;">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-slate-700 text-slate-300 shadow-[0_0_20px_rgba(51,65,85,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-slate-600 group-hover:text-white">
                             <i class="fas fa-chart-pie fa-2x"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8">
-                            <h3 class="text-xl font-bold text-slate-800">Bacharelado em Administração</h3>
-                            <p class="text-slate-600 font-medium mt-1">Estácio</p>
-                            <p class="text-slate-500 text-sm mt-3 flex items-center"><i class="far fa-check-circle mr-2 text-emerald-500"></i>Concluído: Dezembro 2022</p>
+                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                            <div class="mb-2">
+                                <span class="inline-block px-3 py-1 bg-slate-500/10 border border-slate-500/20 text-slate-400 text-xs font-bold rounded-full uppercase tracking-wider">Graduação Base</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-1">Bacharelado em Administração</h3>
+                            <p class="text-slate-300 font-medium mb-4">Estácio</p>
+                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
+                                Concluído: <strong class="ml-1 text-white">Dezembro 2022</strong>
+                            </p>
                         </div>
                     </div>
 
@@ -360,15 +521,22 @@
 
     </main>
 
-    <footer class="bg-slate-900 text-white py-12 border-t-4 border-blue-600">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-6">Sara Marina</h2>
-            <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://wa.me/5527997466945" target="_blank" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-500 transition-colors" title="WhatsApp"><i class="fab fa-whatsapp fa-xl"></i></a>
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-colors" title="LinkedIn"><i class="fab fa-linkedin fa-xl"></i></a>
-                <a href="mailto:saramarinachuina@gmail.com" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-500 transition-colors" title="E-mail"><i class="fas fa-envelope fa-xl"></i></a>
+    <footer class="bg-[#020617] text-white py-16 relative overflow-hidden">
+        <!-- Footer top border glow -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl font-bold mb-8 text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Sara Marina</span></h2>
+            
+            <div class="flex justify-center space-x-6 mb-10">
+                <a href="https://wa.me/5527997466945" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:-translate-y-1 transition-all duration-300" title="WhatsApp"><i class="fab fa-whatsapp fa-xl"></i></a>
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:-translate-y-1 transition-all duration-300" title="LinkedIn"><i class="fab fa-linkedin fa-xl"></i></a>
+                <a href="mailto:saramarinachuina@gmail.com" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-red-500 hover:border-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:-translate-y-1 transition-all duration-300" title="E-mail"><i class="fas fa-envelope fa-xl"></i></a>
             </div>
-            <p class="font-light text-slate-400 text-sm">&copy; 2025 Sara Marina Chuina de Assis.<br>Construído com foco em eficiência, segurança e inovação tecnológica.</p>
+            
+            <div class="w-24 h-1 bg-slate-800 mx-auto rounded-full mb-8"></div>
+            
+            <p class="font-light text-slate-500 text-sm tracking-wide">&copy; 2026 Sara Marina Chuina de Assis.<br>Construído com foco em eficiência, segurança e inovação tecnológica.</p>
         </div>
     </footer>
 
@@ -384,6 +552,7 @@
                     period: "Junho 2025 - Atual",
                     icon: "fas fa-code",
                     color: "bg-blue-600",
+                    shadow: "shadow-blue-500/50",
                     description: "Foco na customização e manutenção do ecossistema ERP Protheus. Em constante aprendizado e desenvolvimento de rotinas em AdvPL, otimização de consultas SQL Server e análise de requisitos técnicos.",
                     details: [
                         "Aprendizado e desenvolvimento de rotinas customizadas em AdvPL.",
@@ -399,6 +568,7 @@
                     period: "Nov 2023 - Jun 2025",
                     icon: "fas fa-network-wired",
                     color: "bg-teal-600",
+                    shadow: "shadow-teal-500/50",
                     description: "Administração de ambientes críticos. Gestão de Active Directory, apoio em Switches (Dell/Cisco), segurança de dispositivos (Trend Mobile) e monitoramento de CFTV (HikCentral).",
                     details: [
                         "Gestão de usuários no Active Directory e suporte VPN Checkpoint.",
@@ -413,7 +583,8 @@
                     company: "Biancogres Grupo",
                     period: "Abr 2021 - Nov 2023",
                     icon: "fas fa-file-invoice-dollar",
-                    color: "bg-slate-500",
+                    color: "bg-indigo-500",
+                    shadow: "shadow-indigo-500/50",
                     description: "Progressão de Recepcionista para Assistente Administrativo. Gestão de despesas (GMCD), contratos, controle de acesso e planejamento de implantação de CFTV.",
                     details: [
                         "Gestão de pacotes de despesas administrativas e gerais.",
@@ -428,7 +599,8 @@
                     company: "Biancogres Grupo",
                     period: "Jun 2020 - Abr 2021",
                     icon: "fas fa-id-badge",
-                    color: "bg-slate-400",
+                    color: "bg-slate-600",
+                    shadow: "shadow-slate-500/50",
                     description: "Primeiros passos no Grupo Biancogres focados em processos e controle.",
                     details: [
                         "Supervisão e regulamentação de acessos de terceiros.",
@@ -442,7 +614,8 @@
                     company: "EDP Brasil",
                     period: "Ago 2018 - Ago 2020",
                     icon: "fas fa-seedling",
-                    color: "bg-amber-500",
+                    color: "bg-amber-600",
+                    shadow: "shadow-amber-500/50",
                     description: "Início da trajetória profissional, adquirindo vivência corporativa com sistemas de gestão empresarial.",
                     details: [
                         "Lançamento de Notas Fiscais de materiais e serviços no SAP.",
@@ -492,9 +665,9 @@
         };
 
         // --- TYPING EFFECT ---
-        const textToType = "Em constante aprendizado com Protheus (AdvPL) & SQL | Segurança da Informação";
+        const textToType = "Em constante aprendizado com Protheus (AdvPL) & SQL | Engenharia de Software";
         let typeIndex = 0;
-        const speed = 50;
+        const speed = 40;
 
         function typeWriter() {
             if (typeIndex < textToType.length) {
@@ -507,8 +680,16 @@
         // --- CHART GENERATION ---
         function initCharts() {
             Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#94a3b8'; // slate-400
             
+            // Skill Radar setup
             const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            
+            // Create gradient for radar
+            const radarGradient = ctxSkills.createLinearGradient(0, 0, 0, 400);
+            radarGradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+            radarGradient.addColorStop(1, 'rgba(99, 102, 241, 0.1)');
+
             new Chart(ctxSkills, {
                 type: 'radar',
                 data: {
@@ -517,12 +698,16 @@
                         label: 'Nível Base/Foco',
                         data: [50, 65, 80, 85, 90, 60],
                         fill: true,
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                        borderColor: 'rgb(59, 130, 246)',
-                        pointBackgroundColor: 'rgb(59, 130, 246)',
-                        pointBorderColor: '#fff',
+                        backgroundColor: radarGradient,
+                        borderColor: '#60a5fa', // blue-400
+                        borderWidth: 2,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#60a5fa',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(59, 130, 246)'
+                        pointHoverBorderColor: '#60a5fa',
+                        pointHoverRadius: 6
                     }]
                 },
                 options: {
@@ -530,11 +715,11 @@
                     maintainAspectRatio: false,
                     scales: {
                         r: {
-                            angleLines: { color: 'rgba(0,0,0,0.1)' },
-                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', circular: true },
                             pointLabels: {
-                                font: { size: 11, weight: '600' },
-                                color: '#475569'
+                                font: { size: 11, weight: '500' },
+                                color: '#94a3b8' // slate-400
                             },
                             ticks: { display: false, max: 100, min: 0 }
                         }
@@ -542,14 +727,23 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(51, 65, 85, 1)',
+                            borderWidth: 1,
+                            padding: 12,
+                            boxPadding: 6,
+                            usePointStyle: true,
                             callbacks: {
-                                label: function(context) { return 'Foco / Base: ' + context.raw; }
+                                label: function(context) { return ' Foco / Base: ' + context.raw; }
                             }
                         }
                     }
                 }
             });
 
+            // Bar Chart Setup
             const ctxTech = document.getElementById('techChart').getContext('2d');
             new Chart(ctxTech, {
                 type: 'bar',
@@ -559,14 +753,23 @@
                         label: 'Frequência de Uso Recente',
                         data: [75, 65, 80, 85, 50], 
                         backgroundColor: [
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(245, 158, 11, 0.8)',
-                            'rgba(16, 185, 129, 0.8)',
-                            'rgba(100, 116, 139, 0.8)',
+                            'rgba(59, 130, 246, 0.8)', // blue
+                            'rgba(99, 102, 241, 0.8)', // indigo
+                            'rgba(245, 158, 11, 0.8)', // amber
+                            'rgba(16, 185, 129, 0.8)', // emerald
+                            'rgba(100, 116, 139, 0.8)', // slate
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(99, 102, 241, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(100, 116, 139, 1)',
                         ],
                         borderRadius: 6,
-                        borderSkipped: false
+                        borderSkipped: false,
+                        barThickness: 'flex',
+                        maxBarThickness: 30
                     }]
                 },
                 options: {
@@ -577,14 +780,20 @@
                         x: { display: false, max: 100 },
                         y: { 
                             grid: { display: false },
-                            ticks: { font: { weight: '500' }, color: '#334155' }
+                            ticks: { font: { weight: '500' }, color: '#94a3b8' } 
                         }
                     },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(51, 65, 85, 1)',
+                            borderWidth: 1,
+                            padding: 12,
                             callbacks: {
-                                label: function(context) { return 'Intensidade: ' + context.raw + '%'; }
+                                label: function(context) { return ' Intensidade: ' + context.raw + '%'; }
                             }
                         }
                     }
@@ -600,62 +809,83 @@
 
             profileData.experience.forEach((job, index) => {
                 const node = document.createElement('div');
-                node.className = `timeline-node w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute border-4 border-white`;
+                node.className = `timeline-node w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute border-4 border-[#020617]`;
                 
                 let topPos = 0;
                 if(profileData.experience.length > 1) {
-                    topPos = (index / (profileData.experience.length - 1)) * 90;
+                    topPos = (index / (profileData.experience.length - 1)) * 90; // Distribute over 90% of height
                 }
                 
                 node.style.top = `${topPos}%`;
-                node.innerHTML = `<i class="${job.icon} fa-lg"></i>`;
+                node.innerHTML = `<i class="${job.icon} text-lg md:text-xl"></i>`;
                 
                 node.addEventListener('click', () => {
+                    // Reset all nodes
                     document.querySelectorAll('.timeline-node').forEach(n => {
-                        n.classList.remove('active', 'scale-125');
-                        n.classList.add('border-white');
-                        n.classList.remove('border-blue-200');
+                        n.classList.remove('active', 'border-blue-400');
+                        n.classList.add('border-[#020617]');
                     });
-                    node.classList.add('active', 'scale-125', 'border-blue-200');
-                    node.classList.remove('border-white');
                     
+                    // Activate clicked node
+                    node.classList.add('active', 'border-blue-400');
+                    node.classList.remove('border-[#020617]');
+                    
+                    // Animate panel out
                     detailPanel.style.opacity = '0';
-                    detailPanel.style.transform = 'translateY(10px)';
+                    detailPanel.style.transform = 'translateY(15px) scale(0.98)';
                     
                     setTimeout(() => {
+                        // Inject content
                         detailPanel.innerHTML = `
-                            <div class="absolute -right-20 -top-20 opacity-5">
-                                <i class="${job.icon} fa-10x"></i>
+                            <div class="absolute -right-10 -top-10 opacity-[0.03]">
+                                <i class="${job.icon} fa-10x text-white"></i>
                             </div>
                             <div class="relative z-10">
-                                <div class="flex items-center mb-6">
-                                    <div class="p-4 rounded-xl ${job.color} text-white mr-5 shadow-md">
+                                <div class="flex flex-col sm:flex-row sm:items-center mb-8 border-b border-slate-800 pb-6">
+                                    <div class="w-16 h-16 rounded-2xl ${job.color} ${job.shadow} shadow-lg text-white flex items-center justify-center mb-4 sm:mb-0 sm:mr-6 shrink-0">
                                         <i class="${job.icon} fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-2xl font-bold text-slate-800">${job.role}</h3>
-                                        <p class="text-blue-600 font-bold text-lg">${job.company}</p>
-                                        <span class="inline-block mt-1 px-3 py-1 bg-slate-200 text-slate-700 text-xs font-bold rounded-full"><i class="far fa-calendar-alt mr-1"></i>${job.period}</span>
+                                        <h3 class="text-2xl font-bold text-white leading-tight mb-1">${job.role}</h3>
+                                        <div class="flex flex-wrap items-center gap-3">
+                                            <p class="text-blue-400 font-semibold text-lg">${job.company}</p>
+                                            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-semibold rounded-md flex items-center shadow-sm">
+                                                <i class="far fa-calendar-alt mr-2 text-slate-400"></i>${job.period}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <p class="text-slate-700 mb-6 leading-relaxed text-lg">${job.description}</p>
-                                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
-                                    <h4 class="font-bold text-slate-800 mb-3 flex items-center"><i class="fas fa-tasks text-blue-500 mr-2"></i>Principais Atividades:</h4>
+                                
+                                <p class="text-slate-300 mb-8 leading-relaxed text-base font-light border-l-2 border-blue-500 pl-4">${job.description}</p>
+                                
+                                <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-800/50">
+                                    <h4 class="font-bold text-white mb-4 flex items-center text-sm uppercase tracking-wider">
+                                        <i class="fas fa-tasks text-blue-500 mr-3"></i>Principais Atividades
+                                    </h4>
                                     <ul class="space-y-3">
-                                        ${job.details.map(d => `<li class="flex items-start"><i class="fas fa-check text-green-500 mt-1 mr-3 shrink-0"></i><span class="text-slate-600">${d}</span></li>`).join('')}
+                                        ${job.details.map(d => `
+                                            <li class="flex items-start">
+                                                <div class="mt-1 mr-3 w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                                                </div>
+                                                <span class="text-slate-400 text-sm leading-relaxed">${d}</span>
+                                            </li>
+                                        `).join('')}
                                     </ul>
                                 </div>
                             </div>
                         `;
+                        // Animate panel in
                         detailPanel.style.opacity = '1';
-                        detailPanel.style.transform = 'translateY(0)';
+                        detailPanel.style.transform = 'translateY(0) scale(1)';
                     }, 300);
                 });
 
                 container.appendChild(node);
             });
 
-            setTimeout(() => { container.children[0].click(); }, 500);
+            // Trigger click on first item after a short delay
+            setTimeout(() => { container.children[0].click(); }, 600);
         }
 
         // --- PROJECTS LOGIC ---
@@ -667,30 +897,34 @@
 
             filtered.forEach((project, index) => {
                 const card = document.createElement('div');
-                card.className = `bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col animate-on-scroll is-visible`;
+                card.className = `glass-card rounded-2xl overflow-hidden group flex flex-col animate-on-scroll is-visible`;
                 card.style.animationDelay = `${index * 100}ms`;
                 
-                const badgeColor = project.category === 'dev' ? 'bg-blue-100 text-blue-700' : project.category === 'data' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700';
+                const badgeColor = project.category === 'dev' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' : project.category === 'data' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30';
                 const badgeText = project.category === 'dev' ? 'Dev' : project.category === 'data' ? 'Dados' : 'Infra';
 
                 card.innerHTML = `
-                    <div class="p-8 flex-grow">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm">
-                                <i class="${project.icon} fa-2x"></i>
+                    <div class="p-8 flex-grow relative overflow-hidden">
+                        <!-- Abstract glow inside card -->
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px] group-hover:bg-blue-500/20 transition-all duration-500"></div>
+                        
+                        <div class="flex justify-between items-start mb-6 relative z-10">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:border-blue-500/50 transition-all duration-300">
+                                <i class="${project.icon} fa-xl"></i>
                             </div>
-                            <span class="px-3 py-1 ${badgeColor} text-xs rounded-full font-bold uppercase tracking-wide">${badgeText}</span>
+                            <span class="px-3 py-1 ${badgeColor} border text-xs rounded-full font-bold uppercase tracking-wide shadow-sm">${badgeText}</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-3">${project.title}</h3>
-                        <p class="text-slate-600 mb-6 leading-relaxed">${project.summary}</p>
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Impacto / Foco</h4>
-                            <p class="text-sm text-slate-700 font-medium">${project.impact}</p>
+                        <h3 class="text-2xl font-bold text-white mb-3 relative z-10">${project.title}</h3>
+                        <p class="text-slate-400 mb-6 leading-relaxed font-light relative z-10">${project.summary}</p>
+                        
+                        <div class="bg-slate-900/60 p-5 rounded-xl border border-slate-800 relative z-10">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Impacto Final</h4>
+                            <p class="text-sm text-slate-300">${project.impact}</p>
                         </div>
                     </div>
-                    <div class="bg-white px-8 py-5 border-t border-slate-100">
+                    <div class="bg-slate-900/80 px-8 py-5 border-t border-slate-800/80 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            ${project.tech.map(t => `<span class="inline-block px-3 py-1 text-xs font-semibold bg-slate-100 border border-slate-200 rounded-lg text-slate-600">${t}</span>`).join('')}
+                            ${project.tech.map(t => `<span class="inline-block px-3 py-1.5 text-xs font-medium bg-slate-800 border border-slate-700 rounded-lg text-slate-300 shadow-sm">${t}</span>`).join('')}
                         </div>
                     </div>
                 `;
@@ -703,11 +937,11 @@
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     buttons.forEach(b => {
-                        b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
-                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                        b.classList.remove('bg-blue-600', 'text-white', 'border-blue-500', 'shadow-[0_0_15px_rgba(59,130,246,0.3)]');
+                        b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
                     });
-                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
-                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                    btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-500', 'shadow-[0_0_15px_rgba(59,130,246,0.3)]');
                     renderProjects(btn.dataset.filter);
                 });
             });
@@ -719,8 +953,8 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('opacity-100', 'translate-y-0');
-                        entry.target.classList.remove('opacity-0', 'translate-y-[30px]');
-                        observer.unobserve(entry.target); // Only animate once
+                        entry.target.classList.remove('opacity-0', 'translate-y-[40px]');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
@@ -748,15 +982,42 @@
             menu.classList.toggle('hidden');
         }
 
+        // Active state navigation logic on scroll
+        function updateActiveNav() {
+            const sections = ['hero', 'dashboard', 'timeline', 'projects', 'education'];
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionEl = document.getElementById(section);
+                const sectionTop = sectionEl.offsetTop;
+                const navHeight = document.querySelector('nav').offsetHeight;
+                
+                if (pageYOffset >= sectionTop - navHeight - 100) {
+                    current = section;
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(current)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
         document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+        window.addEventListener('scroll', updateActiveNav);
 
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(typeWriter, 500); // Start typing slightly after load
+            setTimeout(typeWriter, 800); 
             initCharts();
             renderTimeline();
             setupFilters();
             setupIntersectionObserver();
+            updateActiveNav();
         });
 
     </script>
