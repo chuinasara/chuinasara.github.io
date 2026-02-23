@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Social Media Meta Tags -->
     <title>Sara Marina Chuina - Portfólio Interativo</title>
+    <meta name="description" content="Portfólio de Sara Marina Chuina - Analista de Desenvolvimento de Sistemas com foco em ERP Protheus (AdvPL), SQL Server e Infraestrutura.">
+    <meta property="og:title" content="Sara Marina | Desenvolvedora de Sistemas">
+    <meta property="og:description" content="Especialista em ERP Protheus (AdvPL), SQL Server e Segurança da Informação.">
+    <meta property="og:image" content="https://chuinasara.github.io/avatar-cartoon.png">
+    <meta property="og:url" content="https://chuinasara.github.io/">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -167,7 +176,7 @@
 
         /* Dark Mode Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #020617;
@@ -192,6 +201,36 @@
         @keyframes shine {
             to { background-position: 200% center; }
         }
+
+        /* Infinite Marquee Animation */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            border-top: 1px solid rgba(51, 65, 85, 0.3);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+            padding: 1.25rem 0;
+            display: flex;
+        }
+        .marquee-content {
+            display: flex;
+            animation: marquee 35s linear infinite;
+        }
+        .marquee-item {
+            margin: 0 2.5rem;
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative selection:bg-blue-500/30 selection:text-blue-200">
@@ -201,7 +240,7 @@
     <div class="ambient-glow-2 fixed"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-50 bg-[#020617]/80 backdrop-blur-md border-b border-slate-800/80 shadow-sm transition-all duration-300">
+    <nav class="fixed w-full top-0 z-50 bg-[#020617]/90 backdrop-blur-md border-b border-slate-800/80 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center group cursor-pointer" onclick="scrollToSection('hero')">
@@ -212,11 +251,11 @@
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden sm:flex items-center space-x-1">
-                    <button onclick="scrollToSection('hero')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Início</button>
-                    <button onclick="scrollToSection('dashboard')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Análise Técnica</button>
-                    <button onclick="scrollToSection('timeline')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Trajetória</button>
-                    <button onclick="scrollToSection('projects')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Projetos</button>
-                    <button onclick="scrollToSection('education')" class="nav-item px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Formação</button>
+                    <button onclick="scrollToSection('hero')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Início</button>
+                    <button onclick="scrollToSection('dashboard')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Análise Técnica</button>
+                    <button onclick="scrollToSection('timeline')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Trajetória</button>
+                    <button onclick="scrollToSection('projects')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Projetos</button>
+                    <button onclick="scrollToSection('education')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Formação</button>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
@@ -226,7 +265,7 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu (Hidden by default) -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="sm:hidden hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl absolute w-full">
             <div class="px-4 pt-2 pb-4 space-y-2">
                 <button onclick="scrollToSection('hero'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Início</button>
@@ -245,73 +284,93 @@
     </a>
 
     <!-- Hero Section -->
-    <header id="hero" class="pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden relative">
-        <!-- Dot pattern background -->
+    <header id="hero" class="pt-28 pb-12 md:pt-36 md:pb-16 overflow-hidden relative">
         <div class="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             
-            <!-- Profile Photo Integration with Pulse Ring -->
-            <div class="relative inline-block mx-auto mb-8 animate-on-scroll">
+            <!-- Profile Photo -->
+            <div class="relative inline-block mx-auto mb-6 md:mb-8 animate-on-scroll">
                 <div class="pulse-ring"></div>
-                <img src="avatar-cartoon.png" alt="Avatar Cartoon de Sara Marina Chuina" class="relative z-10 w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-slate-800 shadow-[0_0_30px_rgba(59,130,246,0.3)] bg-slate-800">
-                <div class="absolute -bottom-2 -right-2 bg-blue-600 w-10 h-10 rounded-full border-4 border-[#020617] flex items-center justify-center z-20" title="Desenvolvedora">
-                    <i class="fas fa-code text-white text-sm"></i>
+                <img src="avatar-cartoon.png" alt="Avatar de Sara Marina" class="relative z-10 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-slate-800 shadow-[0_0_30px_rgba(59,130,246,0.3)] bg-slate-800">
+                <div class="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-blue-600 w-8 h-8 md:w-10 md:h-10 rounded-full border-2 md:border-4 border-[#020617] flex items-center justify-center z-20" title="Desenvolvedora">
+                    <i class="fas fa-code text-white text-xs md:text-sm"></i>
                 </div>
             </div>
 
-            <h1 class="text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-7xl mb-6 text-white animate-on-scroll" style="transition-delay: 100ms;">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 text-white animate-on-scroll" style="transition-delay: 100ms;">
                 <span class="text-gradient-animate">
                     Sara Marina Chuina
                 </span>
             </h1>
-            <p class="mt-4 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto font-light h-16 flex justify-center items-center animate-on-scroll" style="transition-delay: 200ms;">
+            <p class="mt-2 md:mt-4 text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light h-16 md:h-12 flex justify-center items-center px-2 animate-on-scroll" style="transition-delay: 200ms;">
                 <span id="typing-text" class="typing-cursor"></span>
             </p>
             
-            <div class="mt-10 flex justify-center gap-4 flex-wrap animate-on-scroll" style="transition-delay: 300ms;">
-                <a href="https://wa.me/5527997466945" target="_blank" class="inline-flex items-center px-6 py-3.5 border border-transparent text-sm sm:text-base font-medium rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.2)] text-white bg-emerald-600 hover:bg-emerald-500 hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:-translate-y-1 transition-all duration-300">
-                    <i class="fab fa-whatsapp mr-2 text-lg"></i> Falar no WhatsApp
+            <div class="mt-8 md:mt-10 flex justify-center gap-3 md:gap-4 flex-wrap animate-on-scroll" style="transition-delay: 300ms;">
+                <a href="Sara Marina Chuina de Assis.pdf" download="Curriculo_Sara_Marina.pdf" class="inline-flex items-center px-5 py-3 md:px-6 md:py-3.5 border border-blue-500/50 text-sm md:text-base font-medium rounded-xl text-blue-400 bg-blue-900/20 backdrop-blur-sm hover:bg-blue-600 hover:text-white hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:-translate-y-1 transition-all duration-300">
+                    <i class="fas fa-file-download mr-2 text-lg"></i> Baixar CV
                 </a>
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="inline-flex items-center px-6 py-3.5 border border-slate-700 text-sm sm:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300">
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="inline-flex items-center px-5 py-3 md:px-6 md:py-3.5 border border-slate-700 text-sm md:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300">
                     <i class="fab fa-linkedin mr-2 text-blue-400 text-lg"></i> LinkedIn
                 </a>
-                <a href="mailto:saramarinachuina@gmail.com" class="inline-flex items-center px-6 py-3.5 border border-slate-700 text-sm sm:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.15)] hover:-translate-y-1 transition-all duration-300">
+                <a href="mailto:saramarinachuina@gmail.com" class="inline-flex items-center px-5 py-3 md:px-6 md:py-3.5 border border-slate-700 text-sm md:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-red-500/50 hover:-translate-y-1 transition-all duration-300">
                     <i class="fas fa-envelope mr-2 text-red-400 text-lg"></i> E-mail
                 </a>
             </div>
             
-            <div class="mt-10 text-slate-500 text-sm font-medium animate-on-scroll" style="transition-delay: 400ms;">
+            <div class="mt-8 md:mt-10 text-slate-500 text-xs md:text-sm font-medium animate-on-scroll" style="transition-delay: 400ms;">
                 <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700/50">
-                    <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Serra, Espírito Santo - Brasil
+                    <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Serra, ES - Brasil
                 </span>
             </div>
         </div>
-        
-        <!-- Subtle bottom gradient separator -->
-        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
     </header>
+
+    <!-- Infinite Tech Marquee -->
+    <div class="marquee-container relative z-10">
+        <div class="marquee-content">
+            <!-- Group 1 -->
+            <span class="marquee-item"><i class="fas fa-database mr-2 text-blue-500"></i>SQL Server</span>
+            <span class="marquee-item"><i class="fas fa-code mr-2 text-indigo-500"></i>AdvPL</span>
+            <span class="marquee-item"><i class="fas fa-cogs mr-2 text-emerald-500"></i>ERP Protheus</span>
+            <span class="marquee-item"><i class="fas fa-network-wired mr-2 text-amber-500"></i>Active Directory</span>
+            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Cybersecurity</span>
+            <span class="marquee-item"><i class="fas fa-server mr-2 text-slate-400"></i>Infraestrutura</span>
+            <span class="marquee-item"><i class="fas fa-camera mr-2 text-teal-500"></i>HikCentral</span>
+            <span class="marquee-item"><i class="fas fa-mobile-alt mr-2 text-purple-500"></i>Trend Mobile</span>
+            <!-- Group 2 (Duplicate for infinite scroll) -->
+            <span class="marquee-item"><i class="fas fa-database mr-2 text-blue-500"></i>SQL Server</span>
+            <span class="marquee-item"><i class="fas fa-code mr-2 text-indigo-500"></i>AdvPL</span>
+            <span class="marquee-item"><i class="fas fa-cogs mr-2 text-emerald-500"></i>ERP Protheus</span>
+            <span class="marquee-item"><i class="fas fa-network-wired mr-2 text-amber-500"></i>Active Directory</span>
+            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Cybersecurity</span>
+            <span class="marquee-item"><i class="fas fa-server mr-2 text-slate-400"></i>Infraestrutura</span>
+            <span class="marquee-item"><i class="fas fa-camera mr-2 text-teal-500"></i>HikCentral</span>
+            <span class="marquee-item"><i class="fas fa-mobile-alt mr-2 text-purple-500"></i>Trend Mobile</span>
+        </div>
+    </div>
 
     <main class="flex-grow relative z-10">
         
         <!-- Section 1: Dashboard / Analytics -->
-        <section id="dashboard" class="py-20 relative">
+        <section id="dashboard" class="py-12 md:py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 animate-on-scroll">
+                <div class="text-center mb-10 md:mb-16 animate-on-scroll">
                     <h2 class="text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Métricas de Competência</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Análise Técnica</h3>
-                    <p class="mt-4 text-slate-400 max-w-2xl mx-auto text-lg font-light">Evolução quantitativa da minha base em infraestrutura e o crescimento focado no desenvolvimento de sistemas corporativos.</p>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Análise Técnica</h3>
+                    <p class="mt-2 md:mt-4 text-slate-400 max-w-2xl mx-auto text-sm md:text-lg font-light">Evolução quantitativa da minha base em infraestrutura e o crescimento focado no desenvolvimento de sistemas corporativos.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
                     <!-- Chart 1: Skill Radar -->
-                    <div class="glass-card p-8 rounded-2xl animate-on-scroll">
-                        <div class="flex items-center mb-6">
-                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mr-4">
-                                <i class="fas fa-spider text-blue-400"></i>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl animate-on-scroll">
+                        <div class="flex items-center mb-4 md:mb-6">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mr-3 md:mr-4">
+                                <i class="fas fa-spider text-blue-400 text-sm md:text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-white">Distribuição de Skills</h3>
+                                <h3 class="text-base md:text-lg font-bold text-white">Distribuição de Skills</h3>
                                 <p class="text-xs text-slate-400">Equilíbrio entre bases de infra e foco em código</p>
                             </div>
                         </div>
@@ -321,13 +380,13 @@
                     </div>
 
                     <!-- Chart 2: Tech Stack Frequency -->
-                    <div class="glass-card p-8 rounded-2xl animate-on-scroll" style="transition-delay: 100ms;">
-                        <div class="flex items-center mb-6">
-                            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mr-4">
-                                <i class="fas fa-layer-group text-indigo-400"></i>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl animate-on-scroll" style="transition-delay: 100ms;">
+                        <div class="flex items-center mb-4 md:mb-6">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mr-3 md:mr-4">
+                                <i class="fas fa-layer-group text-indigo-400 text-sm md:text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-white">Ecossistema Tecnológico</h3>
+                                <h3 class="text-base md:text-lg font-bold text-white">Ecossistema Tecnológico</h3>
                                 <p class="text-xs text-slate-400">Ferramentas de maior interação no momento</p>
                             </div>
                         </div>
@@ -338,32 +397,32 @@
                 </div>
 
                 <!-- Summary Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-on-scroll" style="transition-delay: 200ms;">
-                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 animate-on-scroll" style="transition-delay: 200ms;">
+                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
                         <div class="flex flex-col">
-                            <div class="w-12 h-12 rounded-xl bg-blue-900/30 border border-blue-800/50 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]">
-                                <i class="fas fa-code fa-lg"></i>
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-900/30 border border-blue-800/50 text-blue-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]">
+                                <i class="fas fa-code"></i>
                             </div>
-                            <h4 class="text-lg font-bold text-white mb-2">Desenvolvimento</h4>
-                            <p class="text-sm text-slate-400 font-light leading-relaxed">Automação, gatilhos e relatórios através do aperfeiçoamento constante em AdvPL e SQL Server no ERP Protheus.</p>
+                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Desenvolvimento</h4>
+                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Automação, gatilhos e relatórios através do aperfeiçoamento constante em AdvPL e SQL Server no ERP Protheus.</p>
                         </div>
                     </div>
-                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
                         <div class="flex flex-col">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-900/30 border border-indigo-800/50 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] group-hover:shadow-[0_0_25px_rgba(99,102,241,0.5)]">
-                                <i class="fas fa-shield-alt fa-lg"></i>
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-indigo-900/30 border border-indigo-800/50 text-indigo-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] group-hover:shadow-[0_0_25px_rgba(99,102,241,0.5)]">
+                                <i class="fas fa-shield-alt"></i>
                             </div>
-                            <h4 class="text-lg font-bold text-white mb-2">Segurança</h4>
-                            <p class="text-sm text-slate-400 font-light leading-relaxed">Aprimoramento via MBA. Prática em gestão de acessos corporativos, HikCentral e Trend Mobile.</p>
+                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Segurança</h4>
+                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Aprimoramento via MBA. Prática em gestão de acessos corporativos, HikCentral e Trend Mobile.</p>
                         </div>
                     </div>
-                    <div class="glass-card p-6 rounded-2xl group cursor-default">
+                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
                         <div class="flex flex-col">
-                            <div class="w-12 h-12 rounded-xl bg-amber-900/30 border border-amber-800/50 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]">
-                                <i class="fas fa-network-wired fa-lg"></i>
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-amber-900/30 border border-amber-800/50 text-amber-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]">
+                                <i class="fas fa-network-wired"></i>
                             </div>
-                            <h4 class="text-lg font-bold text-white mb-2">Infraestrutura Base</h4>
-                            <p class="text-sm text-slate-400 font-light leading-relaxed">Experiência consolidada em sustentação de redes, Active Directory, Switches (Cisco/Dell) e Suporte de TI crítico.</p>
+                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Infraestrutura Base</h4>
+                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Experiência consolidada em sustentação de redes, Active Directory, Switches (Cisco/Dell) e Suporte de TI crítico.</p>
                         </div>
                     </div>
                 </div>
@@ -373,17 +432,17 @@
         </section>
 
         <!-- Section 2: Interactive Timeline -->
-        <section id="timeline" class="py-20 relative">
+        <section id="timeline" class="py-12 md:py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 animate-on-scroll">
+                <div class="text-center mb-10 md:mb-16 animate-on-scroll">
                     <h2 class="text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Histórico</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Trajetória Profissional</h3>
-                    <p class="mt-4 text-slate-400 text-lg font-light max-w-2xl mx-auto">A jornada desde o apoio administrativo inicial até à atuação técnica em infraestrutura e desenvolvimento.</p>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Trajetória Profissional</h3>
+                    <p class="mt-2 md:mt-4 text-slate-400 text-sm md:text-lg font-light max-w-2xl mx-auto">A jornada desde o apoio administrativo inicial até à atuação técnica em infraestrutura e desenvolvimento.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
                     <!-- Timeline Visual -->
-                    <div class="lg:col-span-4 relative h-[550px] flex flex-col justify-between items-center py-6 animate-on-scroll">
+                    <div class="lg:col-span-4 relative h-[350px] md:h-[550px] flex flex-col justify-between items-center py-4 md:py-6 animate-on-scroll">
                         <div class="timeline-line"></div>
                         <div id="timeline-nodes-container" class="w-full h-full flex flex-col justify-between items-center relative">
                             <!-- JS Injection -->
@@ -392,17 +451,17 @@
 
                     <!-- Detail Panel -->
                     <div class="lg:col-span-8 animate-on-scroll" style="transition-delay: 200ms;">
-                        <div id="timeline-detail-panel" class="h-full glass-card rounded-2xl p-8 md:p-10 flex flex-col justify-center transition-all duration-500 opacity-100 relative overflow-hidden">
+                        <div id="timeline-detail-panel" class="h-full glass-card rounded-2xl p-6 md:p-10 flex flex-col justify-center transition-all duration-500 opacity-100 relative overflow-hidden">
                             <!-- Decorative background -->
-                            <div class="absolute -right-20 -top-20 opacity-[0.03]">
+                            <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-[0.03]">
                                 <i class="fas fa-layer-group fa-10x text-white"></i>
                             </div>
                             <!-- Dynamic Content -->
                             <div class="text-slate-500 text-center relative z-10 flex flex-col items-center justify-center h-full">
-                                <div class="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-6 animate-pulse">
-                                    <i class="fas fa-hand-pointer fa-2xl text-blue-500/50"></i>
+                                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 md:mb-6 animate-pulse">
+                                    <i class="fas fa-hand-pointer fa-xl md:fa-2xl text-blue-500/50"></i>
                                 </div>
-                                <p class="text-lg font-light">Selecione um ponto na linha do tempo ao lado para explorar os detalhes e responsabilidades de cada fase.</p>
+                                <p class="text-sm md:text-lg font-light">Selecione um ponto na linha do tempo para explorar os detalhes.</p>
                             </div>
                         </div>
                     </div>
@@ -413,23 +472,23 @@
         </section>
 
         <!-- Section 3: Project Portfolio -->
-        <section id="projects" class="py-20 relative">
+        <section id="projects" class="py-12 md:py-20 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 animate-on-scroll">
+                <div class="text-center mb-10 md:mb-12 animate-on-scroll">
                     <h2 class="text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Portfólio</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Atuação & Desafios</h3>
-                    <p class="mt-4 text-slate-400 text-lg font-light">Como transformo aprendizado teórico e experiência técnica em soluções aplicadas no ecossistema corporativo.</p>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Atuação & Desafios</h3>
+                    <p class="mt-2 md:mt-4 text-slate-400 text-sm md:text-lg font-light">Como transformo aprendizado teórico e experiência técnica em soluções aplicadas no ecossistema corporativo.</p>
                 </div>
 
                 <!-- Filter Controls -->
-                <div class="flex justify-center flex-wrap gap-3 mb-12 animate-on-scroll" style="transition-delay: 100ms;">
-                    <button class="filter-btn active px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="all">Todas as Áreas</button>
-                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="dev">Desenvolvimento</button>
-                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="data">Dados/SQL</button>
-                    <button class="filter-btn px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-sm font-medium" data-filter="infra">Infra & Segurança</button>
+                <div class="flex justify-center flex-wrap gap-2 md:gap-3 mb-8 md:mb-12 animate-on-scroll" style="transition-delay: 100ms;">
+                    <button class="filter-btn active px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-xs md:text-sm font-medium" data-filter="all">Todas</button>
+                    <button class="filter-btn px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-xs md:text-sm font-medium" data-filter="dev">Desenvolvimento</button>
+                    <button class="filter-btn px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-xs md:text-sm font-medium" data-filter="data">Dados/SQL</button>
+                    <button class="filter-btn px-4 md:px-6 py-2 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white hover:border-slate-500 transition-all shadow-sm text-xs md:text-sm font-medium" data-filter="infra">Infra</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="projects-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" id="projects-grid">
                     <!-- Projects injected by JS -->
                 </div>
             </div>
@@ -438,79 +497,79 @@
         </section>
 
         <!-- Section 4: Education -->
-        <section id="education" class="py-20 relative">
+        <section id="education" class="py-12 md:py-20 relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 animate-on-scroll">
+                <div class="text-center mb-12 md:mb-16 animate-on-scroll">
                     <h2 class="text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Conhecimento</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Formação Acadêmica</h3>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">Formação Acadêmica</h3>
                 </div>
                 
-                <div class="space-y-8 relative before:absolute before:inset-0 before:ml-10 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-blue-600/20 before:via-indigo-500/50 before:to-transparent">
+                <div class="space-y-8 md:space-y-10 relative before:absolute before:inset-0 before:ml-7 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-blue-600/20 before:via-indigo-500/50 before:to-transparent">
                     
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]">
-                            <i class="fas fa-code-branch fa-2x"></i>
+                        <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-full border-4 border-[#020617] bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(37,99,235,0.6)]">
+                            <i class="fas fa-code-branch text-lg md:text-2xl"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-5 md:p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-2">
-                                <span class="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
+                                <span class="inline-block px-2 md:px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] md:text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-1">MBA em Engenharia de Software</h3>
-                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
-                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                <i class="far fa-calendar-alt mr-3 text-blue-400 fa-lg"></i>
-                                Previsão de conclusão: <strong class="ml-1 text-white">08/2026</strong>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-1">MBA em Engenharia de Software</h3>
+                            <p class="text-slate-300 text-sm md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-xs md:text-sm flex items-center bg-slate-900/50 p-2.5 md:p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-calendar-alt mr-2 md:mr-3 text-blue-400"></i>
+                                Conclusão: <strong class="ml-1 text-white">08/2026</strong>
                             </p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 100ms;">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]">
-                            <i class="fas fa-shield-alt fa-2x"></i>
+                        <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-full border-4 border-[#020617] bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]">
+                            <i class="fas fa-shield-alt text-lg md:text-2xl"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-5 md:p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-2">
-                                <span class="inline-block px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
+                                <span class="inline-block px-2 md:px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] md:text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-1">MBA em Segurança da Informação</h3>
-                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
-                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
-                                Concluído: <strong class="ml-1 text-white">Setembro 2025</strong>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-1">MBA em Segurança da Informação</h3>
+                            <p class="text-slate-300 text-sm md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-xs md:text-sm flex items-center bg-slate-900/50 p-2.5 md:p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-2 md:mr-3 text-emerald-400"></i>
+                                Concluído: <strong class="ml-1 text-white">Set. 2025</strong>
                             </p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 200ms;">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-indigo-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(79,70,229,0.6)]">
-                            <i class="fas fa-laptop-code fa-2x"></i>
+                        <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-full border-4 border-[#020617] bg-indigo-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(79,70,229,0.6)]">
+                            <i class="fas fa-laptop-code text-lg md:text-2xl"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-5 md:p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-2">
-                                <span class="inline-block px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold rounded-full uppercase tracking-wider">Graduação</span>
+                                <span class="inline-block px-2 md:px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] md:text-xs font-bold rounded-full uppercase tracking-wider">Graduação</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-1">Bacharelado em Sistemas de Informação</h3>
-                            <p class="text-slate-300 font-medium mb-4">Faculdade Descomplica</p>
-                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
-                                Concluído: <strong class="ml-1 text-white">Julho 2025</strong>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-1">Sistemas de Informação</h3>
+                            <p class="text-slate-300 text-sm md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <p class="text-slate-400 text-xs md:text-sm flex items-center bg-slate-900/50 p-2.5 md:p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-2 md:mr-3 text-emerald-400"></i>
+                                Concluído: <strong class="ml-1 text-white">Jul. 2025</strong>
                             </p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 300ms;">
-                        <div class="flex items-center justify-center w-20 h-20 rounded-full border-4 border-[#020617] bg-slate-700 text-slate-300 shadow-[0_0_20px_rgba(51,65,85,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-slate-600 group-hover:text-white">
-                            <i class="fas fa-chart-pie fa-2x"></i>
+                        <div class="flex items-center justify-center w-14 h-14 md:w-20 md:h-20 rounded-full border-4 border-[#020617] bg-slate-700 text-slate-300 shadow-[0_0_20px_rgba(51,65,85,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-slate-600 group-hover:text-white">
+                            <i class="fas fa-chart-pie text-lg md:text-2xl"></i>
                         </div>
-                        <div class="w-[calc(100%-5rem)] md:w-[calc(50%-3rem)] glass-card p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] glass-card p-5 md:p-8 rounded-2xl ml-4 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-2">
-                                <span class="inline-block px-3 py-1 bg-slate-500/10 border border-slate-500/20 text-slate-400 text-xs font-bold rounded-full uppercase tracking-wider">Graduação Base</span>
+                                <span class="inline-block px-2 md:px-3 py-1 bg-slate-500/10 border border-slate-500/20 text-slate-400 text-[10px] md:text-xs font-bold rounded-full uppercase tracking-wider">Graduação Base</span>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-1">Bacharelado em Administração</h3>
-                            <p class="text-slate-300 font-medium mb-4">Estácio</p>
-                            <p class="text-slate-400 text-sm flex items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                <i class="far fa-check-circle mr-3 text-emerald-400 fa-lg"></i>
-                                Concluído: <strong class="ml-1 text-white">Dezembro 2022</strong>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-1">Administração</h3>
+                            <p class="text-slate-300 text-sm md:text-base font-medium mb-3 md:mb-4">Estácio</p>
+                            <p class="text-slate-400 text-xs md:text-sm flex items-center bg-slate-900/50 p-2.5 md:p-3 rounded-lg border border-slate-700/50">
+                                <i class="far fa-check-circle mr-2 md:mr-3 text-emerald-400"></i>
+                                Concluído: <strong class="ml-1 text-white">Dez. 2022</strong>
                             </p>
                         </div>
                     </div>
@@ -521,22 +580,22 @@
 
     </main>
 
-    <footer class="bg-[#020617] text-white py-16 relative overflow-hidden">
+    <footer class="bg-[#020617] text-white py-12 md:py-16 relative overflow-hidden">
         <!-- Footer top border glow -->
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
         
         <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-3xl font-bold mb-8 text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Sara Marina</span></h2>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Sara Marina</span></h2>
             
-            <div class="flex justify-center space-x-6 mb-10">
-                <a href="https://wa.me/5527997466945" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:-translate-y-1 transition-all duration-300" title="WhatsApp"><i class="fab fa-whatsapp fa-xl"></i></a>
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:-translate-y-1 transition-all duration-300" title="LinkedIn"><i class="fab fa-linkedin fa-xl"></i></a>
-                <a href="mailto:saramarinachuina@gmail.com" target="_blank" class="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-red-500 hover:border-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:-translate-y-1 transition-all duration-300" title="E-mail"><i class="fas fa-envelope fa-xl"></i></a>
+            <div class="flex justify-center space-x-4 md:space-x-6 mb-8 md:mb-10">
+                <a href="https://wa.me/5527997466945" target="_blank" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:-translate-y-1 transition-all duration-300" title="WhatsApp"><i class="fab fa-whatsapp text-lg md:text-xl"></i></a>
+                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:-translate-y-1 transition-all duration-300" title="LinkedIn"><i class="fab fa-linkedin text-lg md:text-xl"></i></a>
+                <a href="mailto:saramarinachuina@gmail.com" target="_blank" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-red-500 hover:border-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:-translate-y-1 transition-all duration-300" title="E-mail"><i class="fas fa-envelope text-lg md:text-xl"></i></a>
             </div>
             
-            <div class="w-24 h-1 bg-slate-800 mx-auto rounded-full mb-8"></div>
+            <div class="w-16 md:w-24 h-1 bg-slate-800 mx-auto rounded-full mb-6 md:mb-8"></div>
             
-            <p class="font-light text-slate-500 text-sm tracking-wide">&copy; 2026 Sara Marina Chuina de Assis.<br>Construído com foco em eficiência, segurança e inovação tecnológica.</p>
+            <p class="font-light text-slate-500 text-xs md:text-sm tracking-wide">&copy; 2026 Sara Marina Chuina de Assis.<br>Construído com foco em eficiência, segurança e inovação tecnológica.</p>
         </div>
     </footer>
 
@@ -547,7 +606,7 @@
             experience: [
                 {
                     id: 1,
-                    role: "Analista de Desenvolvimento de Sistemas",
+                    role: "Desenvolvimento de Sistemas",
                     company: "Biancogres Grupo",
                     period: "Junho 2025 - Atual",
                     icon: "fas fa-code",
@@ -563,7 +622,7 @@
                 },
                 {
                     id: 2,
-                    role: "Analista de Infraestrutura de TI",
+                    role: "Infraestrutura de TI",
                     company: "Biancogres Grupo",
                     period: "Nov 2023 - Jun 2025",
                     icon: "fas fa-network-wired",
@@ -574,12 +633,12 @@
                         "Gestão de usuários no Active Directory e suporte VPN Checkpoint.",
                         "Apoio na configuração de switches Dell e Cisco.",
                         "Monitoramento de segurança via HikCentral.",
-                        "Atendimento de tickets de suporte via Movidesk."
+                        "Atendimento de tickets via Movidesk."
                     ]
                 },
                 {
                     id: 3,
-                    role: "Assistente Administrativo / Recepção",
+                    role: "Assistente Admin / Recepção",
                     company: "Biancogres Grupo",
                     period: "Abr 2021 - Nov 2023",
                     icon: "fas fa-file-invoice-dollar",
@@ -589,8 +648,8 @@
                     details: [
                         "Gestão de pacotes de despesas administrativas e gerais.",
                         "Acompanhamento de metas, KPIs e orçamento.",
-                        "Planejamento de implantação do sistema de CFTV na indústria.",
-                        "Controle de acesso de funcionários através do Sistema Senior."
+                        "Planejamento de CFTV na indústria.",
+                        "Controle de acesso através do Sistema Senior."
                     ]
                 },
                 {
@@ -603,14 +662,14 @@
                     shadow: "shadow-slate-500/50",
                     description: "Primeiros passos no Grupo Biancogres focados em processos e controle.",
                     details: [
-                        "Supervisão e regulamentação de acessos de terceiros.",
-                        "Monitoramento e administração de incidentes nas instalações.",
-                        "Abertura e acompanhamento de chamados internos."
+                        "Supervisão de autorizações de acesso de terceiros.",
+                        "Monitoramento e administração de incidentes.",
+                        "Abertura e acompanhamento de chamados."
                     ]
                 },
                 {
                     id: 5,
-                    role: "Apoio Administrativo / Menor Aprendiz",
+                    role: "Apoio Administrativo",
                     company: "EDP Brasil",
                     period: "Ago 2018 - Ago 2020",
                     icon: "fas fa-seedling",
@@ -618,21 +677,21 @@
                     shadow: "shadow-amber-500/50",
                     description: "Início da trajetória profissional, adquirindo vivência corporativa com sistemas de gestão empresarial.",
                     details: [
-                        "Lançamento de Notas Fiscais de materiais e serviços no SAP.",
-                        "Análise financeira e tratamento de anomalias de pagamentos.",
-                        "Organização de arquivos e apoio administrativo geral."
+                        "Lançamento de Notas Fiscais no SAP.",
+                        "Análise financeira e tratamento de anomalias.",
+                        "Organização de arquivos e apoio geral."
                     ]
                 }
             ],
             projects: [
                 {
                     id: "p1",
-                    title: "Curva de Aprendizado em Protheus",
+                    title: "Curva em Protheus",
                     category: "dev",
                     icon: "fas fa-cogs",
                     tech: ["AdvPL", "Protheus", "Lógica"],
                     summary: "Estudo e aplicação prática em rotinas customizadas, ecrãs e gatilhos para compreender os processos internos do ERP.",
-                    impact: "Apoio na tradução de requisitos sistêmicos através de desenvolvimento em linguagem proprietária (AdvPL)."
+                    impact: "Apoio na tradução de requisitos sistêmicos (AdvPL)."
                 },
                 {
                     id: "p2",
@@ -641,7 +700,7 @@
                     icon: "fas fa-database",
                     tech: ["SQL Server", "Dados", "Relatórios"],
                     summary: "Criação de consultas para extração de informações estratégicas e suporte a relatórios do setor.",
-                    impact: "Fornecimento de dados organizados para a gestão e acompanhamento de indicadores."
+                    impact: "Fornecimento de dados para a gestão."
                 },
                 {
                     id: "p3",
@@ -650,16 +709,16 @@
                     icon: "fas fa-server",
                     tech: ["Active Directory", "VPN", "Cisco/Dell"],
                     summary: "Apoio na administração de ambientes, gestão de acessos VPN Checkpoint e resolução de chamados.",
-                    impact: "Garantia de que as operações diárias dos colaboradores fluam com segurança e estabilidade."
+                    impact: "Garantia de segurança e estabilidade."
                 },
                 {
                     id: "p4",
-                    title: "Monitoramento & Segurança CFTV",
+                    title: "Monitoramento CFTV",
                     category: "infra",
                     icon: "fas fa-camera",
                     tech: ["HikCentral", "Trend Mobile", "Projetos"],
                     summary: "Participação no planejamento de implantação de CFTV e gestão de dispositivos corporativos.",
-                    impact: "Auxílio direto na proteção do parque tecnológico da indústria contra anomalias."
+                    impact: "Proteção do parque tecnológico contra anomalias."
                 }
             ]
         };
@@ -693,10 +752,10 @@
             new Chart(ctxSkills, {
                 type: 'radar',
                 data: {
-                    labels: ['Desenvolvimento', 'Banco de Dados', 'Infra & Redes', 'Segurança Info', 'Gestão/Admin', 'ERP (Protheus)'],
+                    labels: ['Desenvolvimento', 'Banco de Dados', 'Infra & Redes', 'Segurança Info', 'Gestão/Admin', 'ERP'],
                     datasets: [{
                         label: 'Nível Base/Foco',
-                        data: [50, 65, 80, 85, 90, 60],
+                        data: [70, 75, 80, 85, 90, 75],
                         fill: true,
                         backgroundColor: radarGradient,
                         borderColor: '#60a5fa', // blue-400
@@ -718,7 +777,7 @@
                             angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
                             grid: { color: 'rgba(255, 255, 255, 0.05)', circular: true },
                             pointLabels: {
-                                font: { size: 11, weight: '500' },
+                                font: { size: window.innerWidth < 768 ? 9 : 11, weight: '500' },
                                 color: '#94a3b8' // slate-400
                             },
                             ticks: { display: false, max: 100, min: 0 }
@@ -748,10 +807,10 @@
             new Chart(ctxTech, {
                 type: 'bar',
                 data: {
-                    labels: ['SQL Server', 'AdvPL (Aprendizado)', 'Active Directory', 'HikCentral / Trend', 'SAP / Senior'],
+                    labels: ['SQL Server', 'AdvPL', 'Active Directory', 'HikCentral / Trend', 'SAP / Senior'],
                     datasets: [{
                         label: 'Frequência de Uso Recente',
-                        data: [75, 65, 80, 85, 50], 
+                        data: [80, 75, 80, 85, 50], 
                         backgroundColor: [
                             'rgba(59, 130, 246, 0.8)', // blue
                             'rgba(99, 102, 241, 0.8)', // indigo
@@ -768,7 +827,7 @@
                         ],
                         borderRadius: 6,
                         borderSkipped: false,
-                        barThickness: 'flex',
+                        barThickness: window.innerWidth < 768 ? 15 : 'flex',
                         maxBarThickness: 30
                     }]
                 },
@@ -780,7 +839,7 @@
                         x: { display: false, max: 100 },
                         y: { 
                             grid: { display: false },
-                            ticks: { font: { weight: '500' }, color: '#94a3b8' } 
+                            ticks: { font: { size: window.innerWidth < 768 ? 10 : 12, weight: '500' }, color: '#94a3b8' } 
                         }
                     },
                     plugins: {
@@ -809,7 +868,7 @@
 
             profileData.experience.forEach((job, index) => {
                 const node = document.createElement('div');
-                node.className = `timeline-node w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute border-4 border-[#020617]`;
+                node.className = `timeline-node w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute border-4 border-[#020617]`;
                 
                 let topPos = 0;
                 if(profileData.experience.length > 1) {
@@ -817,7 +876,7 @@
                 }
                 
                 node.style.top = `${topPos}%`;
-                node.innerHTML = `<i class="${job.icon} text-lg md:text-xl"></i>`;
+                node.innerHTML = `<i class="${job.icon} text-sm md:text-xl"></i>`;
                 
                 node.addEventListener('click', () => {
                     // Reset all nodes
@@ -832,43 +891,43 @@
                     
                     // Animate panel out
                     detailPanel.style.opacity = '0';
-                    detailPanel.style.transform = 'translateY(15px) scale(0.98)';
+                    detailPanel.style.transform = window.innerWidth < 768 ? 'translateY(5px) scale(0.98)' : 'translateY(15px) scale(0.98)';
                     
                     setTimeout(() => {
                         // Inject content
                         detailPanel.innerHTML = `
-                            <div class="absolute -right-10 -top-10 opacity-[0.03]">
+                            <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-[0.03]">
                                 <i class="${job.icon} fa-10x text-white"></i>
                             </div>
                             <div class="relative z-10">
-                                <div class="flex flex-col sm:flex-row sm:items-center mb-8 border-b border-slate-800 pb-6">
-                                    <div class="w-16 h-16 rounded-2xl ${job.color} ${job.shadow} shadow-lg text-white flex items-center justify-center mb-4 sm:mb-0 sm:mr-6 shrink-0">
-                                        <i class="${job.icon} fa-2x"></i>
+                                <div class="flex flex-col sm:flex-row sm:items-center mb-5 md:mb-8 border-b border-slate-800 pb-4 md:pb-6">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl ${job.color} ${job.shadow} shadow-lg text-white flex items-center justify-center mb-3 sm:mb-0 sm:mr-5 shrink-0">
+                                        <i class="${job.icon} text-xl md:text-2xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-2xl font-bold text-white leading-tight mb-1">${job.role}</h3>
-                                        <div class="flex flex-wrap items-center gap-3">
-                                            <p class="text-blue-400 font-semibold text-lg">${job.company}</p>
-                                            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-semibold rounded-md flex items-center shadow-sm">
-                                                <i class="far fa-calendar-alt mr-2 text-slate-400"></i>${job.period}
+                                        <h3 class="text-xl md:text-2xl font-bold text-white leading-tight mb-1">${job.role}</h3>
+                                        <div class="flex flex-wrap items-center gap-2 md:gap-3">
+                                            <p class="text-blue-400 font-semibold text-sm md:text-lg">${job.company}</p>
+                                            <span class="px-2 md:px-3 py-1 bg-slate-800/80 border border-slate-700 text-slate-300 text-[10px] md:text-xs font-semibold rounded-md flex items-center shadow-sm">
+                                                <i class="far fa-calendar-alt mr-1 md:mr-2 text-slate-400"></i>${job.period}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <p class="text-slate-300 mb-8 leading-relaxed text-base font-light border-l-2 border-blue-500 pl-4">${job.description}</p>
+                                <p class="text-slate-300 mb-5 md:mb-8 leading-relaxed text-sm md:text-base font-light border-l-2 border-blue-500 pl-3 md:pl-4">${job.description}</p>
                                 
-                                <div class="bg-slate-900/40 p-6 rounded-xl border border-slate-800/50">
-                                    <h4 class="font-bold text-white mb-4 flex items-center text-sm uppercase tracking-wider">
-                                        <i class="fas fa-tasks text-blue-500 mr-3"></i>Principais Atividades
+                                <div class="bg-slate-900/40 p-4 md:p-6 rounded-xl border border-slate-800/50">
+                                    <h4 class="font-bold text-white mb-3 md:mb-4 flex items-center text-xs md:text-sm uppercase tracking-wider">
+                                        <i class="fas fa-tasks text-blue-500 mr-2 md:mr-3"></i>Principais Atividades
                                     </h4>
-                                    <ul class="space-y-3">
+                                    <ul class="space-y-2 md:space-y-3">
                                         ${job.details.map(d => `
                                             <li class="flex items-start">
-                                                <div class="mt-1 mr-3 w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                                                <div class="mt-1 mr-2 md:mr-3 w-3 h-3 md:w-4 md:h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                                    <div class="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-400"></div>
                                                 </div>
-                                                <span class="text-slate-400 text-sm leading-relaxed">${d}</span>
+                                                <span class="text-slate-400 text-xs md:text-sm leading-relaxed">${d}</span>
                                             </li>
                                         `).join('')}
                                     </ul>
@@ -904,27 +963,27 @@
                 const badgeText = project.category === 'dev' ? 'Dev' : project.category === 'data' ? 'Dados' : 'Infra';
 
                 card.innerHTML = `
-                    <div class="p-8 flex-grow relative overflow-hidden">
+                    <div class="p-6 md:p-8 flex-grow relative overflow-hidden">
                         <!-- Abstract glow inside card -->
-                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px] group-hover:bg-blue-500/20 transition-all duration-500"></div>
+                        <div class="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 bg-blue-500/10 rounded-full blur-[30px] md:blur-[40px] group-hover:bg-blue-500/20 transition-all duration-500"></div>
                         
-                        <div class="flex justify-between items-start mb-6 relative z-10">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:border-blue-500/50 transition-all duration-300">
-                                <i class="${project.icon} fa-xl"></i>
+                        <div class="flex justify-between items-start mb-5 md:mb-6 relative z-10">
+                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:border-blue-500/50 transition-all duration-300">
+                                <i class="${project.icon} text-lg md:text-xl"></i>
                             </div>
-                            <span class="px-3 py-1 ${badgeColor} border text-xs rounded-full font-bold uppercase tracking-wide shadow-sm">${badgeText}</span>
+                            <span class="px-2 md:px-3 py-1 ${badgeColor} border text-[10px] md:text-xs rounded-full font-bold uppercase tracking-wide shadow-sm">${badgeText}</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-3 relative z-10">${project.title}</h3>
-                        <p class="text-slate-400 mb-6 leading-relaxed font-light relative z-10">${project.summary}</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-3 relative z-10">${project.title}</h3>
+                        <p class="text-slate-400 mb-5 md:mb-6 leading-relaxed font-light text-sm md:text-base relative z-10">${project.summary}</p>
                         
-                        <div class="bg-slate-900/60 p-5 rounded-xl border border-slate-800 relative z-10">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Impacto Final</h4>
-                            <p class="text-sm text-slate-300">${project.impact}</p>
+                        <div class="bg-slate-900/60 p-4 md:p-5 rounded-xl border border-slate-800 relative z-10">
+                            <h4 class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 md:mb-2">Impacto Final</h4>
+                            <p class="text-xs md:text-sm text-slate-300">${project.impact}</p>
                         </div>
                     </div>
-                    <div class="bg-slate-900/80 px-8 py-5 border-t border-slate-800/80 mt-auto">
-                        <div class="flex flex-wrap gap-2">
-                            ${project.tech.map(t => `<span class="inline-block px-3 py-1.5 text-xs font-medium bg-slate-800 border border-slate-700 rounded-lg text-slate-300 shadow-sm">${t}</span>`).join('')}
+                    <div class="bg-slate-900/80 px-6 md:px-8 py-4 md:py-5 border-t border-slate-800/80 mt-auto">
+                        <div class="flex flex-wrap gap-1.5 md:gap-2">
+                            ${project.tech.map(t => `<span class="inline-block px-2.5 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-medium bg-slate-800 border border-slate-700 rounded-lg text-slate-300 shadow-sm">${t}</span>`).join('')}
                         </div>
                     </div>
                 `;
@@ -991,11 +1050,13 @@
             
             sections.forEach(section => {
                 const sectionEl = document.getElementById(section);
-                const sectionTop = sectionEl.offsetTop;
-                const navHeight = document.querySelector('nav').offsetHeight;
-                
-                if (pageYOffset >= sectionTop - navHeight - 100) {
-                    current = section;
+                if(sectionEl) {
+                    const sectionTop = sectionEl.offsetTop;
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    
+                    if (pageYOffset >= sectionTop - navHeight - 100) {
+                        current = section;
+                    }
                 }
             });
 
