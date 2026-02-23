@@ -8,7 +8,7 @@
     <title>Sara Marina Chuina - Portfólio Interativo</title>
     <meta name="description" content="Portfólio de Sara Marina Chuina - Analista de Desenvolvimento de Sistemas com foco em ERP Protheus (AdvPL), SQL Server e Infraestrutura.">
     <meta property="og:title" content="Sara Marina | Desenvolvedora de Sistemas">
-    <meta property="og:description" content="Especialista em ERP Protheus (AdvPL), SQL Server e Segurança da Informação.">
+    <meta property="og:description" content="Especialista em ERP Protheus (AdvPL), SQL Server e Engenharia de Software.">
     <meta property="og:image" content="https://chuinasara.github.io/avatar-cartoon.png">
     <meta property="og:url" content="https://chuinasara.github.io/">
     <meta property="og:type" content="website">
@@ -21,17 +21,17 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #020617; /* slate-950 - Fundo mais profundo */
-            color: #f8fafc; /* slate-50 */
+            background-color: #020617; /* slate-950 */
+            color: #f8fafc;
             scroll-behavior: smooth;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Ambient Background Glow */
+        /* Ambient Glow Effects */
         .ambient-glow-1 {
             position: absolute;
-            top: -10%;
+            top: -5%;
             left: -10%;
             width: 50vw;
             height: 50vw;
@@ -43,59 +43,52 @@
         }
         .ambient-glow-2 {
             position: absolute;
-            top: 40%;
+            top: 30%;
             right: -10%;
             width: 60vw;
             height: 60vw;
-            background: radial-gradient(circle, rgba(79,70,229,0.1) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(79,70,229,0.08) 0%, rgba(0,0,0,0) 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
             filter: blur(80px);
         }
 
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-            z-index: 10;
-        }
-
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-
-        /* Premium Glass Panel */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6); /* slate-900 */
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700 */
+            border: 1px solid rgba(51, 65, 85, 0.5);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            border-color: rgba(59, 130, 246, 0.5); /* blue-500 */
+            border-color: rgba(59, 130, 246, 0.5);
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
-            transform: translateY(-4px);
         }
 
+        /* Timeline Redesign for better mobile spacing */
         .timeline-line {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #3b82f6, #6366f1, transparent);
-            z-index: 0;
-            opacity: 0.5;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3b82f6, #6366f1, transparent);
+            opacity: 0.3;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-line {
+                width: 2px;
+                height: 100%;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%);
+                background: linear-gradient(to bottom, transparent, #3b82f6, #6366f1, transparent);
+            }
         }
 
         .timeline-node {
@@ -105,14 +98,13 @@
         }
 
         .timeline-node.active {
-            transform: scale(1.3);
+            transform: scale(1.2);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
             border-color: #60a5fa !important;
         }
 
         .nav-item {
             transition: all 0.3s ease;
-            cursor: pointer;
             position: relative;
         }
         
@@ -133,14 +125,13 @@
         }
 
         .nav-item.active {
-            color: #60a5fa; /* blue-400 */
+            color: #60a5fa;
             font-weight: 600;
         }
 
-        /* Scroll Animations */
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -149,16 +140,13 @@
             transform: translateY(0);
         }
 
-        /* Typing cursor effect */
         .typing-cursor::after {
             content: '|';
             animation: blink 1s step-end infinite;
             color: #60a5fa;
-            font-weight: 300;
         }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Pulse ring for Avatar */
         .pulse-ring {
             position: absolute;
             top: 50%;
@@ -175,22 +163,6 @@
             to { box-shadow: 0 0 0 45px rgba(59, 130, 246, 0); }
         }
 
-        /* Dark Mode Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
-        }
-
-        /* Text Gradient Animation */
         .text-gradient-animate {
             background: linear-gradient(to right, #60a5fa, #a78bfa, #60a5fa);
             background-size: 200% auto;
@@ -203,7 +175,6 @@
             to { background-position: 200% center; }
         }
 
-        /* Infinite Marquee Animation */
         .marquee-container {
             overflow: hidden;
             white-space: nowrap;
@@ -228,70 +199,32 @@
             display: flex;
             align-items: center;
         }
-        @media (min-width: 768px) {
-            .marquee-item {
-                margin: 0 2.5rem;
-                font-size: 0.875rem;
-            }
-            .marquee-container {
-                padding: 1.25rem 0;
-            }
-        }
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        /* Floating Animation for Code Card */
-        @keyframes float-slow {
-            0% { transform: translateY(0px) rotate(-5deg); }
-            50% { transform: translateY(-20px) rotate(-2deg); }
-            100% { transform: translateY(0px) rotate(-5deg); }
-        }
-        @keyframes float-slow-reverse {
-            0% { transform: translateY(0px) rotate(5deg); }
-            50% { transform: translateY(15px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(5deg); }
-        }
-        .animate-float {
-            animation: float-slow 8s ease-in-out infinite;
-        }
-        .animate-float-reverse {
-            animation: float-slow-reverse 6s ease-in-out infinite;
-        }
-        
-        /* Monospace font for code */
-        .font-mono {
-            font-family: 'Fira Code', monospace;
-        }
-
-        /* Loader para a IA */
-        .typing-loader {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
         .typing-loader span {
             width: 6px;
             height: 6px;
             background-color: #60a5fa;
             border-radius: 50%;
+            display: inline-block;
             animation: bounce 1.4s infinite ease-in-out both;
         }
-        .typing-loader span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-loader span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes bounce {
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1); }
         }
+
+        .font-mono { font-family: 'Fira Code', monospace; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative selection:bg-blue-500/30 selection:text-blue-200">
 
     <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 z-[60] w-0 transition-all duration-150"></div>
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 z-[60] w-0"></div>
 
-    <!-- Global Ambient Lights -->
     <div class="ambient-glow-1 fixed"></div>
     <div class="ambient-glow-2 fixed"></div>
 
@@ -300,7 +233,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center group cursor-pointer" onclick="scrollToSection('hero')">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-3 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-3 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                         <i class="fas fa-code text-white text-sm"></i>
                     </div>
                     <span class="text-lg md:text-xl font-bold text-white tracking-tight">Sara Marina</span>
@@ -312,37 +245,34 @@
                     <button onclick="scrollToSection('timeline')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Trajetória</button>
                     <button onclick="scrollToSection('projects')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Projetos</button>
                     <button onclick="scrollToSection('education')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white">Formação</button>
-                    <button onclick="scrollToSection('ai-assistant')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 hover:from-indigo-300 hover:to-purple-300">✨ Assistente IA</button>
+                    <button onclick="scrollToSection('ai-assistant')" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">✨ Assistente IA</button>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="flex items-center md:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-400 hover:text-white focus:outline-none p-2 rounded-md hover:bg-slate-800 transition-colors">
+                    <button id="mobile-menu-btn" class="text-slate-400 hover:text-white p-2">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl absolute w-full z-40">
-            <div class="px-4 pt-2 pb-4 space-y-2">
-                <button onclick="scrollToSection('hero'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Início</button>
-                <button onclick="scrollToSection('dashboard'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Análise Técnica</button>
-                <button onclick="scrollToSection('timeline'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Trajetória</button>
-                <button onclick="scrollToSection('projects'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Projetos</button>
-                <button onclick="scrollToSection('education'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-all">Formação</button>
-                <button onclick="scrollToSection('ai-assistant'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-base font-medium text-indigo-400 hover:text-indigo-300 hover:bg-slate-800 transition-all">✨ Assistente IA</button>
-            </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl absolute w-full z-40 px-4 py-4 space-y-2">
+            <button onclick="scrollToSection('hero'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300">Início</button>
+            <button onclick="scrollToSection('dashboard'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300">Análise</button>
+            <button onclick="scrollToSection('timeline'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300">Trajetória</button>
+            <button onclick="scrollToSection('projects'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300">Projetos</button>
+            <button onclick="scrollToSection('education'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300">Formação</button>
+            <button onclick="scrollToSection('ai-assistant'); toggleMobileMenu();" class="block w-full text-left px-4 py-3 rounded-lg text-indigo-400 font-bold">✨ Assistente IA</button>
         </div>
     </nav>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://api.whatsapp.com/send?phone=5527997466945&text=Ol%C3%A1%20Sara!%20Vi%20o%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-emerald-500 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:bg-emerald-400 hover:scale-110 transition-all duration-300 z-50 group" title="Fale comigo no WhatsApp">
-        <div class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-20 group-hover:opacity-40"></div>
+    <!-- Fixed Buttons -->
+    <a href="https://api.whatsapp.com/send?phone=5527997466945&text=Olá%20Sara!%20Vi%20o%20teu%20portfólio%20e%20gostaria%20de%20falar%20contigo." target="_blank" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-emerald-500 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)] z-50 group transition-transform hover:scale-110">
+        <div class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-20"></div>
         <i class="fab fa-whatsapp text-3xl md:text-4xl relative z-10"></i>
     </a>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-slate-800/80 backdrop-blur-md text-blue-400 border border-slate-700 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-slate-700 hover:text-white transition-all duration-300 z-40 opacity-0 translate-y-10 pointer-events-none" title="Voltar ao Topo">
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-slate-800/80 backdrop-blur-md text-blue-400 border border-slate-700 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center z-40 opacity-0 translate-y-10 transition-all pointer-events-none">
         <i class="fas fa-arrow-up text-lg"></i>
     </button>
 
@@ -350,61 +280,32 @@
     <header id="hero" class="pt-24 pb-12 md:pt-36 md:pb-16 overflow-hidden relative min-h-[90vh] flex flex-col justify-center">
         <div class="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
         
-        <!-- Floating Dev Cards (Easter Eggs visíveis em desktop) -->
-        <div class="hidden lg:block absolute top-1/4 left-10 xl:left-[10%] glass-card p-4 rounded-xl animate-float opacity-60 z-0">
-            <div class="flex items-center gap-1.5 mb-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-                <div class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
-                <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
-            </div>
-            <pre class="font-mono text-[10px] text-blue-300 leading-relaxed"><code><span class="text-indigo-400">User Function</span> <span class="text-emerald-400">GeraRelat()</span><br>  <span class="text-slate-400">Local</span> cQuery := <span class="text-amber-300">"SELECT *"</span><br>  <span class="text-indigo-400">If</span> MsgYesNo(<span class="text-amber-300">"Processar?"</span>)<br>    ExecAuto()<br>  <span class="text-indigo-400">EndIf</span><br><span class="text-indigo-400">Return</span> .T.</code></pre>
-        </div>
-
-        <div class="hidden lg:block absolute bottom-1/4 right-10 xl:right-[10%] glass-card p-4 rounded-xl animate-float-reverse opacity-50 z-0 border-indigo-500/30">
-            <div class="flex items-center gap-2 mb-2 border-b border-slate-700/50 pb-2">
-                <i class="fas fa-database text-indigo-400 text-xs"></i>
-                <span class="text-[10px] text-slate-400 font-mono">query_bi.sql</span>
-            </div>
-            <pre class="font-mono text-[10px] text-slate-300 leading-relaxed"><code><span class="text-blue-400">SELECT</span> T1.NOME, T2.VALOR<br><span class="text-blue-400">FROM</span> SA1010 T1<br><span class="text-blue-400">INNER JOIN</span> SC5010 T2<br>  <span class="text-blue-400">ON</span> T1.A1_COD = T2.C5_CLIENTE<br><span class="text-blue-400">WHERE</span> T1.D_E_L_E_T_ = <span class="text-amber-300">''</span></code></pre>
-        </div>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full">
-            
-            <!-- Profile Photo -->
             <div class="relative inline-block mx-auto mb-6 md:mb-8 animate-on-scroll">
                 <div class="pulse-ring"></div>
-                <img src="avatar-cartoon.png" alt="Avatar de Sara Marina" class="relative z-10 w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-slate-800 shadow-[0_0_30px_rgba(59,130,246,0.3)] bg-slate-800">
-                <div class="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-blue-600 w-8 h-8 md:w-10 md:h-10 rounded-full border-2 md:border-4 border-[#020617] flex items-center justify-center z-20" title="Desenvolvedora">
+                <img src="avatar-cartoon.png" alt="Avatar de Sara Marina" class="relative z-10 w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-slate-800 shadow-xl bg-slate-800">
+                <div class="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-blue-600 w-8 h-8 md:w-10 md:h-10 rounded-full border-2 md:border-4 border-[#020617] flex items-center justify-center z-20">
                     <i class="fas fa-code text-white text-xs md:text-sm"></i>
                 </div>
             </div>
 
-            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-3 md:mb-6 text-white animate-on-scroll px-2" style="transition-delay: 100ms;">
-                <span class="text-gradient-animate">
-                    Sara Marina Chuina
-                </span>
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-3 md:mb-6 text-white animate-on-scroll px-2">
+                <span class="text-gradient-animate">Sara Marina Chuina</span>
             </h1>
-            <p class="mt-2 md:mt-4 text-sm sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light h-16 md:h-12 flex justify-center items-center px-4 animate-on-scroll" style="transition-delay: 200ms;">
+            <p class="mt-2 md:mt-4 text-sm sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light h-16 md:h-12 flex justify-center items-center px-4 animate-on-scroll">
                 <span id="typing-text" class="typing-cursor"></span>
             </p>
             
-            <!-- Ações -->
-            <div class="mt-6 md:mt-10 flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-4 sm:px-0 animate-on-scroll" style="transition-delay: 300ms;">
-                
-                <a href="Sara%20Marina%20Chuina%20de%20Assis.pdf" download="Curriculo_Sara_Marina.pdf" class="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 md:px-6 md:py-3.5 border border-blue-500/50 text-sm md:text-base font-medium rounded-xl text-blue-400 bg-blue-900/20 backdrop-blur-sm hover:bg-blue-600 hover:text-white hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-300">
+            <div class="mt-6 md:mt-10 flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-4 sm:px-0 animate-on-scroll">
+                <a href="Sara%20Marina%20Chuina%20de%20Assis.pdf" download="Curriculo_Sara_Marina.pdf" class="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 md:px-6 md:py-3.5 border border-blue-500/50 text-sm md:text-base font-medium rounded-xl text-blue-400 bg-blue-900/20 backdrop-blur-sm hover:bg-blue-600 hover:text-white transition-all">
                     <i class="fas fa-file-download mr-2 text-lg"></i> Baixar CV
                 </a>
-                
-                <a href="https://api.whatsapp.com/send?phone=5527997466945&text=Ol%C3%A1%20Sara!%20Vi%20o%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" class="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 md:px-6 md:py-3.5 border border-transparent text-sm md:text-base font-medium rounded-xl text-slate-900 bg-white hover:bg-slate-200 shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300">
+                <a href="https://api.whatsapp.com/send?phone=5527997466945&text=Olá%20Sara!%20Vi%20o%20teu%20portfólio." target="_blank" class="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 md:px-6 md:py-3.5 border border-transparent text-sm md:text-base font-medium rounded-xl text-slate-900 bg-white hover:bg-slate-200 transition-all">
                     <i class="fab fa-whatsapp text-emerald-500 mr-2 text-lg"></i> Falar Comigo
-                </a>
-                
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-full sm:w-auto inline-flex justify-center items-center px-5 py-3 md:px-6 md:py-3.5 border border-slate-700 text-sm md:text-base font-medium rounded-xl text-slate-200 bg-slate-800/80 backdrop-blur-sm hover:bg-slate-700 hover:border-blue-500/50 hover:text-white transition-all duration-300">
-                    <i class="fab fa-linkedin text-blue-400 mr-2 text-lg"></i> LinkedIn
                 </a>
             </div>
             
-            <div class="mt-8 md:mt-12 text-slate-500 text-[11px] md:text-sm font-medium animate-on-scroll" style="transition-delay: 400ms;">
+            <div class="mt-8 md:mt-12 text-slate-500 text-[11px] md:text-sm font-medium animate-on-scroll">
                 <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm">
                     <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Serra, ES - Brasil
                 </span>
@@ -412,193 +313,158 @@
         </div>
     </header>
 
-    <!-- Infinite Tech Marquee -->
     <div class="marquee-container relative z-10">
         <div class="marquee-content">
-            <!-- Group 1 -->
             <span class="marquee-item"><i class="fas fa-database mr-2 text-blue-500"></i>SQL Server</span>
             <span class="marquee-item"><i class="fas fa-code mr-2 text-indigo-500"></i>AdvPL</span>
             <span class="marquee-item"><i class="fas fa-cogs mr-2 text-emerald-500"></i>ERP Protheus</span>
             <span class="marquee-item"><i class="fas fa-network-wired mr-2 text-amber-500"></i>Active Directory</span>
-            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Cybersecurity</span>
+            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Segurança</span>
             <span class="marquee-item"><i class="fas fa-server mr-2 text-slate-400"></i>Infraestrutura</span>
-            <span class="marquee-item"><i class="fas fa-camera mr-2 text-teal-500"></i>HikCentral</span>
-            <span class="marquee-item"><i class="fas fa-mobile-alt mr-2 text-purple-500"></i>Trend Mobile</span>
-            <!-- Group 2 -->
             <span class="marquee-item"><i class="fas fa-database mr-2 text-blue-500"></i>SQL Server</span>
             <span class="marquee-item"><i class="fas fa-code mr-2 text-indigo-500"></i>AdvPL</span>
             <span class="marquee-item"><i class="fas fa-cogs mr-2 text-emerald-500"></i>ERP Protheus</span>
             <span class="marquee-item"><i class="fas fa-network-wired mr-2 text-amber-500"></i>Active Directory</span>
-            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Cybersecurity</span>
+            <span class="marquee-item"><i class="fas fa-shield-alt mr-2 text-red-500"></i>Segurança</span>
             <span class="marquee-item"><i class="fas fa-server mr-2 text-slate-400"></i>Infraestrutura</span>
-            <span class="marquee-item"><i class="fas fa-camera mr-2 text-teal-500"></i>HikCentral</span>
-            <span class="marquee-item"><i class="fas fa-mobile-alt mr-2 text-purple-500"></i>Trend Mobile</span>
         </div>
     </div>
 
     <main class="flex-grow relative z-10">
         
-        <!-- Section 1: Dashboard / Analytics -->
-        <section id="dashboard" class="py-12 md:py-20 relative px-2 sm:px-0">
+        <!-- Section 1: Dashboard -->
+        <section id="dashboard" class="py-12 md:py-20 relative px-4 sm:px-0">
             <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div class="text-center mb-8 md:mb-16 animate-on-scroll">
                     <h2 class="text-[10px] md:text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Métricas de Competência</h2>
                     <h3 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Análise Técnica</h3>
-                    <p class="mt-2 md:mt-4 text-slate-400 max-w-2xl mx-auto text-xs md:text-lg font-light px-4">Evolução quantitativa da minha base em infraestrutura e o crescimento focado no desenvolvimento de sistemas.</p>
+                    <p class="mt-2 md:mt-4 text-slate-400 max-w-2xl mx-auto text-xs md:text-lg font-light px-4">Evolução quantitativa focada em desenvolvimento Júnior.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
-                    <!-- Chart 1: Skill Radar -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mb-10 md:mb-12">
                     <div class="glass-card p-4 md:p-8 rounded-2xl animate-on-scroll">
                         <div class="flex items-center mb-4 md:mb-6">
                             <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mr-3 md:mr-4 shrink-0">
                                 <i class="fas fa-spider text-blue-400 text-sm md:text-base"></i>
                             </div>
-                            <div>
-                                <h3 class="text-sm md:text-lg font-bold text-white leading-tight">Distribuição de Skills</h3>
-                                <p class="text-[10px] md:text-xs text-slate-400">Equilíbrio entre bases de infra e foco em código</p>
-                            </div>
+                            <h3 class="text-sm md:text-lg font-bold text-white">Skills Matrix (Júnior 60%)</h3>
                         </div>
-                        <div class="chart-container h-[250px] md:h-[350px]">
+                        <div class="chart-container h-[280px] md:h-[380px]">
                             <canvas id="skillsChart"></canvas>
                         </div>
                     </div>
-
-                    <!-- Chart 2: Tech Stack Frequency -->
                     <div class="glass-card p-4 md:p-8 rounded-2xl animate-on-scroll" style="transition-delay: 100ms;">
                         <div class="flex items-center mb-4 md:mb-6">
                             <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mr-3 md:mr-4 shrink-0">
                                 <i class="fas fa-layer-group text-indigo-400 text-sm md:text-base"></i>
                             </div>
-                            <div>
-                                <h3 class="text-sm md:text-lg font-bold text-white leading-tight">Ecossistema Tecnológico</h3>
-                                <p class="text-[10px] md:text-xs text-slate-400">Ferramentas de maior interação no momento</p>
-                            </div>
+                            <h3 class="text-sm md:text-lg font-bold text-white">Intensidade de Uso</h3>
                         </div>
-                        <div class="chart-container h-[250px] md:h-[350px]">
+                        <div class="chart-container h-[280px] md:h-[380px]">
                             <canvas id="techChart"></canvas>
                         </div>
                     </div>
                 </div>
-
-                <!-- Summary Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-on-scroll" style="transition-delay: 200ms;">
-                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
-                        <div class="flex flex-col">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-900/30 border border-blue-800/50 text-blue-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Desenvolvimento</h4>
-                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Automação, gatilhos e relatórios através do aperfeiçoamento constante em AdvPL e SQL Server no ERP Protheus.</p>
-                        </div>
-                    </div>
-                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
-                        <div class="flex flex-col">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-indigo-900/30 border border-indigo-800/50 text-indigo-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Segurança</h4>
-                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Aprimoramento via MBAs. Prática em gestão de acessos corporativos, HikCentral e Trend Mobile.</p>
-                        </div>
-                    </div>
-                    <div class="glass-card p-5 md:p-6 rounded-2xl group cursor-default">
-                        <div class="flex flex-col">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-amber-900/30 border border-amber-800/50 text-amber-400 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-                                <i class="fas fa-network-wired"></i>
-                            </div>
-                            <h4 class="text-base md:text-lg font-bold text-white mb-1.5 md:mb-2">Infraestrutura Base</h4>
-                            <p class="text-xs md:text-sm text-slate-400 font-light leading-relaxed">Experiência consolidada em sustentação de redes, Active Directory, Switches e Suporte crítico.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
-            
-            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
-        <!-- Section 2: Interactive Timeline -->
-        <section id="timeline" class="py-12 md:py-20 relative px-2 sm:px-0">
+        <!-- Section 2: Trajetória Profissional -->
+        <section id="timeline" class="py-12 md:py-24 relative px-4">
             <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div class="text-center mb-8 md:mb-16 animate-on-scroll">
-                    <h2 class="text-[10px] md:text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Histórico</h2>
-                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Trajetória Profissional</h3>
-                    <p class="mt-2 md:mt-4 text-slate-400 text-xs md:text-lg font-light max-w-2xl mx-auto px-4">A jornada desde o apoio administrativo inicial até à atuação técnica em infra e desenvolvimento.</p>
+                    <h2 class="text-[10px] md:text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Jornada</h2>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-2">Trajetória Profissional</h3>
+                    <p class="text-slate-400 text-xs md:text-lg font-light">Evolução constante no Grupo Biancogres.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10">
-                    <!-- Timeline Visual -->
-                    <div class="lg:col-span-3 xl:col-span-4 relative h-[280px] md:h-[550px] flex flex-col justify-between items-center py-2 md:py-6 animate-on-scroll">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 items-start">
+                    <div class="lg:col-span-3 xl:col-span-4 relative md:h-[600px] py-4 md:py-8 animate-on-scroll">
                         <div class="timeline-line"></div>
-                        <div id="timeline-nodes-container" class="w-full h-full flex flex-col justify-between items-center relative">
-                            <!-- JS Injection -->
+                        <div id="timeline-nodes-container" class="w-full flex md:flex-col justify-between items-center relative gap-2 px-2 md:px-0">
+                            <!-- JS Injected Nodes -->
                         </div>
                     </div>
-
-                    <!-- Detail Panel -->
                     <div class="lg:col-span-9 xl:col-span-8 animate-on-scroll" style="transition-delay: 100ms;">
-                        <div id="timeline-detail-panel" class="h-full glass-card rounded-2xl p-5 md:p-10 flex flex-col justify-center transition-all duration-300 opacity-100 relative overflow-hidden">
+                        <div id="timeline-detail-panel" class="glass-card rounded-3xl p-5 md:p-10 min-h-[350px] flex flex-col justify-center transition-all duration-300 relative overflow-hidden">
                             <div class="absolute -right-10 -top-10 md:-right-20 md:-top-20 opacity-[0.03]">
-                                <i class="fas fa-layer-group fa-10x text-white"></i>
+                                <i class="fas fa-briefcase fa-10x text-white"></i>
                             </div>
-                            <div class="text-slate-500 text-center relative z-10 flex flex-col items-center justify-center h-full py-10">
-                                <div class="w-12 h-12 md:w-20 md:h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 md:mb-6 animate-pulse">
-                                    <i class="fas fa-hand-pointer fa-lg md:fa-2xl text-blue-500/50"></i>
-                                </div>
-                                <p class="text-xs md:text-lg font-light px-4">Selecione um ponto na linha do tempo acima para explorar os detalhes da experiência.</p>
+                            <div class="text-slate-500 text-center py-10 relative z-10">
+                                <i class="fas fa-hand-pointer text-2xl mb-4 animate-bounce"></i>
+                                <p class="text-sm md:text-lg font-light px-4">Seleciona um marco acima para ver os detalhes da minha evolução.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
-        <!-- Section 3: Project Portfolio -->
-        <section id="projects" class="py-12 md:py-20 relative px-2 sm:px-0">
-            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <!-- Section 3: Projetos (Recuperada) -->
+        <section id="projects" class="py-12 md:py-24 relative px-4 bg-slate-950/20">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
                 <div class="text-center mb-8 md:mb-12 animate-on-scroll">
                     <h2 class="text-[10px] md:text-xs font-bold tracking-widest text-blue-500 uppercase mb-2">Portfólio</h2>
                     <h3 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Atuação & Desafios</h3>
-                    <p class="mt-2 md:mt-4 text-slate-400 text-xs md:text-lg font-light px-4">Como transformo aprendizado e experiência em soluções no ecossistema corporativo.</p>
                 </div>
-
-                <!-- Filter Controls -->
-                <div class="flex justify-center flex-wrap gap-2 md:gap-3 mb-8 md:mb-12 animate-on-scroll" style="transition-delay: 100ms;">
+                <div class="flex justify-center flex-wrap gap-2 md:gap-3 mb-8 md:mb-12 animate-on-scroll">
                     <button class="filter-btn active px-3 md:px-6 py-1.5 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all shadow-sm text-[10px] md:text-sm font-medium" data-filter="all">Todas</button>
                     <button class="filter-btn px-3 md:px-6 py-1.5 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all shadow-sm text-[10px] md:text-sm font-medium" data-filter="dev">Dev</button>
                     <button class="filter-btn px-3 md:px-6 py-1.5 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all shadow-sm text-[10px] md:text-sm font-medium" data-filter="data">Dados/SQL</button>
                     <button class="filter-btn px-3 md:px-6 py-1.5 md:py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all shadow-sm text-[10px] md:text-sm font-medium" data-filter="infra">Infra</button>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8" id="projects-grid">
                     <!-- Projects injected by JS -->
                 </div>
             </div>
-            
-            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
         </section>
 
-        <!-- Section 4: Education -->
-        <section id="education" class="py-12 md:py-20 relative px-2 sm:px-0">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section 4: AI Assistant -->
+        <section id="ai-assistant" class="py-12 md:py-24 relative px-4 bg-slate-950/40 border-t border-slate-900">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-8 animate-on-scroll">
+                    <div class="inline-flex items-center justify-center p-3 bg-indigo-500/10 rounded-full mb-4 border border-indigo-500/20">
+                        <i class="fas fa-robot text-indigo-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Assistente Virtual Sara IA</h3>
+                    <p class="text-slate-400 text-xs md:text-sm font-light">Pergunta sobre a minha experiência em Protheus ou SQL.</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-4 md:p-6 animate-on-scroll border border-indigo-500/30">
+                    <div id="chat-container" class="h-64 overflow-y-auto mb-4 pr-2 space-y-4 flex flex-col scroll-smooth">
+                        <div class="flex items-start gap-2 max-w-[85%]">
+                            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shrink-0"><i class="fas fa-robot text-white text-xs"></i></div>
+                            <div class="bg-slate-800 p-3 rounded-2xl rounded-tl-sm text-xs md:text-sm text-slate-200">Olá! Como posso ajudar a conhecer melhor o perfil profissional da Sara hoje?</div>
+                        </div>
+                    </div>
+                    <form id="ai-form" class="relative flex items-center">
+                        <input type="text" id="ai-input" placeholder="Que tecnologias ela usa?" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs md:text-sm rounded-xl py-3 pl-4 pr-12 focus:outline-none focus:border-indigo-500 transition-all placeholder-slate-600 shadow-inner" required autocomplete="off">
+                        <button type="submit" id="ai-submit-btn" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center justify-center transition-colors">
+                            <i class="fas fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Education -->
+        <section id="education" class="py-12 md:py-24 relative px-4">
+            <div class="max-w-5xl mx-auto px-4 lg:px-8">
                 <div class="text-center mb-10 md:mb-16 animate-on-scroll">
-                    <h2 class="text-[10px] md:text-xs font-bold tracking-widest text-indigo-500 uppercase mb-2">Conhecimento</h2>
-                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Formação Acadêmica</h3>
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Formação Académica</h2>
                 </div>
                 
                 <div class="space-y-6 md:space-y-10 relative before:absolute before:inset-0 before:ml-5 md:before:ml-auto md:before:-translate-x-0 before:-translate-x-px before:h-full before:w-[2px] md:before:w-1 before:bg-gradient-to-b before:from-blue-600/20 before:via-indigo-500/50 before:to-transparent">
                     
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll">
-                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300">
+                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all">
                             <i class="fas fa-code-branch text-sm md:text-2xl"></i>
                         </div>
                         <div class="w-[calc(100%-3rem)] md:w-[calc(50%-3rem)] glass-card p-4 md:p-8 rounded-2xl ml-3 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-1.5 md:mb-2">
                                 <span class="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] md:text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
                             </div>
-                            <h3 class="text-sm md:text-xl font-bold text-white mb-1">MBA Eng. de Software</h3>
-                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <h3 class="text-sm md:text-xl font-bold text-white mb-1 leading-tight">MBA em Engenharia de Software</h3>
+                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3">Faculdade Descomplica</p>
                             <p class="text-slate-400 text-[10px] md:text-sm flex items-center bg-slate-900/50 p-2 md:p-3 rounded-lg border border-slate-700/50">
                                 <i class="far fa-calendar-alt mr-2 text-blue-400"></i>
                                 Prev. conclusão: <strong class="ml-1 text-white">08/2026</strong>
@@ -607,248 +473,72 @@
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 100ms;">
-                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300">
+                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all">
                             <i class="fas fa-shield-alt text-sm md:text-2xl"></i>
                         </div>
                         <div class="w-[calc(100%-3rem)] md:w-[calc(50%-3rem)] glass-card p-4 md:p-8 rounded-2xl ml-3 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-1.5 md:mb-2">
                                 <span class="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] md:text-xs font-bold rounded-full uppercase tracking-wider">Pós-Graduação</span>
                             </div>
-                            <h3 class="text-sm md:text-xl font-bold text-white mb-1">MBA Seg. da Informação</h3>
-                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <h3 class="text-sm md:text-xl font-bold text-white mb-1 leading-tight">MBA em Segurança da Informação</h3>
+                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3">Faculdade Descomplica</p>
                             <p class="text-slate-400 text-[10px] md:text-sm flex items-center bg-slate-900/50 p-2 md:p-3 rounded-lg border border-slate-700/50">
                                 <i class="far fa-check-circle mr-2 text-emerald-400"></i>
-                                Concluído: <strong class="ml-1 text-white">Set. 2025</strong>
+                                Concluído: <strong class="ml-1 text-white">09/2025</strong>
                             </p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 200ms;">
-                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300">
+                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all">
                             <i class="fas fa-laptop-code text-sm md:text-2xl"></i>
                         </div>
                         <div class="w-[calc(100%-3rem)] md:w-[calc(50%-3rem)] glass-card p-4 md:p-8 rounded-2xl ml-3 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
                             <div class="mb-1.5 md:mb-2">
                                 <span class="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[9px] md:text-xs font-bold rounded-full uppercase tracking-wider">Graduação</span>
                             </div>
-                            <h3 class="text-sm md:text-xl font-bold text-white mb-1">Sistemas de Informação</h3>
-                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3 md:mb-4">Faculdade Descomplica</p>
+                            <h3 class="text-sm md:text-xl font-bold text-white mb-1 leading-tight">Sistemas de Informação</h3>
+                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3">Faculdade Descomplica</p>
                             <p class="text-slate-400 text-[10px] md:text-sm flex items-center bg-slate-900/50 p-2 md:p-3 rounded-lg border border-slate-700/50">
                                 <i class="far fa-check-circle mr-2 text-emerald-400"></i>
-                                Concluído: <strong class="ml-1 text-white">Jul. 2025</strong>
+                                Concluído: <strong class="ml-1 text-white">07/2025</strong>
                             </p>
                         </div>
                     </div>
 
-                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-on-scroll" style="transition-delay: 300ms;">
-                        <div class="flex items-center justify-center w-10 h-10 md:w-20 md:h-20 rounded-full border-[3px] md:border-4 border-[#020617] bg-slate-700 text-slate-300 shadow-[0_0_15px_rgba(51,65,85,0.4)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-all duration-300">
-                            <i class="fas fa-chart-pie text-sm md:text-2xl"></i>
-                        </div>
-                        <div class="w-[calc(100%-3rem)] md:w-[calc(50%-3rem)] glass-card p-4 md:p-8 rounded-2xl ml-3 md:ml-0 md:group-odd:pr-10 md:group-even:pl-10">
-                            <div class="mb-1.5 md:mb-2">
-                                <span class="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-slate-500/10 border border-slate-500/20 text-slate-400 text-[9px] md:text-xs font-bold rounded-full uppercase tracking-wider">Base</span>
-                            </div>
-                            <h3 class="text-sm md:text-xl font-bold text-white mb-1">Administração</h3>
-                            <p class="text-slate-300 text-[11px] md:text-base font-medium mb-3 md:mb-4">Estácio</p>
-                            <p class="text-slate-400 text-[10px] md:text-sm flex items-center bg-slate-900/50 p-2 md:p-3 rounded-lg border border-slate-700/50">
-                                <i class="far fa-check-circle mr-2 text-emerald-400"></i>
-                                Concluído: <strong class="ml-1 text-white">Dez. 2022</strong>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
-        </section>
-
-        <!-- NOVO: Section AI Assistant Powered by Gemini API -->
-        <section id="ai-assistant" class="py-12 md:py-20 relative px-2 sm:px-0 bg-slate-950/50">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-8 md:mb-12 animate-on-scroll">
-                    <div class="inline-flex items-center justify-center p-2 bg-indigo-500/10 rounded-full mb-4 border border-indigo-500/20">
-                        <i class="fas fa-robot text-indigo-400 text-xl md:text-2xl px-2"></i>
-                    </div>
-                    <h2 class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-2">Powered by Gemini AI</h2>
-                    <h3 class="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">✨ Assistente Virtual Sara</h3>
-                    <p class="mt-2 md:mt-4 text-slate-400 text-xs md:text-base font-light max-w-2xl mx-auto px-4">
-                        Tem alguma dúvida sobre a minha experiência? Pergunte à minha assistente de Inteligência Artificial baseada no meu perfil profissional.
-                    </p>
-                </div>
-
-                <div class="glass-card rounded-2xl p-4 md:p-8 animate-on-scroll border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.1)]">
-                    <!-- Chat Display Area -->
-                    <div id="chat-container" class="h-64 md:h-80 overflow-y-auto mb-6 pr-2 space-y-4 flex flex-col">
-                        <!-- Bot Message -->
-                        <div class="flex items-start gap-3 w-[90%] md:w-[80%]">
-                            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 shadow-lg">
-                                <i class="fas fa-robot text-white text-xs"></i>
-                            </div>
-                            <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-3 md:p-4 shadow-sm">
-                                <p class="text-sm md:text-base text-slate-200">Olá! Eu sou a Assistente IA da Sara. Pode perguntar-me sobre a experiência dela com o ERP Protheus, SQL Server, a sua transição da área de Infraestrutura para o Desenvolvimento, ou a sua formação académica!</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Input Area -->
-                    <form id="ai-form" class="relative flex items-center">
-                        <input type="text" id="ai-input" placeholder="Ex: Que tecnologias a Sara domina?" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm md:text-base rounded-xl py-3 md:py-4 pl-4 pr-12 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-slate-500 shadow-inner" required autocomplete="off">
-                        <button type="submit" id="ai-submit-btn" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center justify-center transition-colors shadow-md">
-                            <i class="fas fa-paper-plane text-sm"></i>
-                        </button>
-                    </form>
-                    <p class="text-center text-[10px] text-slate-500 mt-3 font-light">As respostas são geradas por Inteligência Artificial (Gemini) baseadas nos dados deste portfólio.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-[#020617] text-white py-10 md:py-16 relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-xl md:text-3xl font-bold mb-5 md:mb-8 text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Sara Marina</span></h2>
-            
-            <div class="flex justify-center space-x-4 md:space-x-6 mb-6 md:mb-10">
-                <a href="https://api.whatsapp.com/send?phone=5527997466945&text=Ol%C3%A1%20Sara!%20Vi%20o%20seu%20portf%C3%B3lio." target="_blank" class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:border-emerald-400 transition-all duration-300"><i class="fab fa-whatsapp text-base md:text-xl"></i></a>
-                <a href="https://www.linkedin.com/in/sara-marina-chuina-56a427195" target="_blank" class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 transition-all duration-300"><i class="fab fa-linkedin text-base md:text-xl"></i></a>
-                <a href="mailto:saramarinachuina@gmail.com" target="_blank" class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:bg-red-500 hover:border-red-400 transition-all duration-300"><i class="fas fa-envelope text-base md:text-xl"></i></a>
-            </div>
-            
-            <p class="font-light text-slate-500 text-[10px] md:text-sm tracking-wide">&copy; 2026 Sara Marina Chuina de Assis.<br>Feito com foco em eficiência e tecnologia.</p>
-        </div>
+    <footer class="bg-[#020617] text-white py-12 text-center relative border-t border-slate-900">
+        <p class="text-slate-500 text-[10px] md:text-sm tracking-wide">&copy; 2026 Sara Marina Chuina de Assis.<br>Analista de Tecnologia e Desenvolvimento Júnior.</p>
     </footer>
 
-    <!-- Application Logic -->
     <script>
         const profileData = {
             experience: [
-                {
-                    id: 1,
-                    role: "Desenvolvimento de Sistemas",
-                    company: "Biancogres Grupo",
-                    period: "Junho 2025 - Atual",
-                    icon: "fas fa-code",
-                    color: "bg-blue-600",
-                    shadow: "shadow-blue-500/50",
-                    description: "Foco na customização e manutenção do ecossistema ERP Protheus. Desenvolvimento de rotinas em AdvPL, consultas SQL e análise de requisitos.",
-                    details: [
-                        "Desenvolvimento de rotinas customizadas em AdvPL.",
-                        "Criação de consultas SQL para relatórios.",
-                        "Análise de requisitos para melhorias."
-                    ]
-                },
-                {
-                    id: 2,
-                    role: "Infraestrutura de TI",
-                    company: "Biancogres Grupo",
-                    period: "Nov 2023 - Jun 2025",
-                    icon: "fas fa-network-wired",
-                    color: "bg-teal-600",
-                    shadow: "shadow-teal-500/50",
-                    description: "Administração de ambientes. Gestão de AD, apoio em Switches, segurança Mobile e CFTV.",
-                    details: [
-                        "Gestão de Active Directory e VPN Checkpoint.",
-                        "Apoio em switches Dell e Cisco.",
-                        "Monitoramento HikCentral e Trend Mobile."
-                    ]
-                },
-                {
-                    id: 3,
-                    role: "Assistente Admin / Recepção",
-                    company: "Biancogres Grupo",
-                    period: "Abr 2021 - Nov 2023",
-                    icon: "fas fa-file-invoice-dollar",
-                    color: "bg-indigo-500",
-                    shadow: "shadow-indigo-500/50",
-                    description: "Gestão de despesas, contratos, controle de acesso e planejamento de CFTV.",
-                    details: [
-                        "Gestão de pacotes de despesas e orçamento.",
-                        "Planejamento de CFTV na indústria.",
-                        "Controle de acesso via Sistema Senior."
-                    ]
-                },
-                {
-                    id: 4,
-                    role: "Estagiária",
-                    company: "Biancogres Grupo",
-                    period: "Jun 2020 - Abr 2021",
-                    icon: "fas fa-id-badge",
-                    color: "bg-slate-600",
-                    shadow: "shadow-slate-500/50",
-                    description: "Primeiros passos no Grupo focados em processos e controle.",
-                    details: [
-                        "Supervisão de acessos de terceiros.",
-                        "Administração de incidentes.",
-                        "Abertura de tickets de suporte."
-                    ]
-                },
-                {
-                    id: 5,
-                    role: "Apoio Administrativo",
-                    company: "EDP Brasil",
-                    period: "Ago 2018 - Ago 2020",
-                    icon: "fas fa-seedling",
-                    color: "bg-amber-600",
-                    shadow: "shadow-amber-500/50",
-                    description: "Início da trajetória profissional, adquirindo vivência corporativa.",
-                    details: [
-                        "Lançamento de Notas Fiscais no SAP.",
-                        "Análise financeira.",
-                        "Organização de arquivos."
-                    ]
-                }
+                { id: 1, role: "Desenvolvimento de Sistemas", company: "Biancogres Grupo", period: "Jun/2025 - Atual", icon: "fas fa-code", color: "bg-blue-600", desc: "Desenvolvimento AdvPL e SQL no ecossistema Protheus.", details: ["Rotinas customizadas em AdvPL.", "Queries SQL para BI e relatórios.", "Análise de requisitos sistémicos."] },
+                { id: 2, role: "Infraestrutura de TI", company: "Biancogres Grupo", period: "2023 - 2025", icon: "fas fa-network-wired", color: "bg-teal-600", desc: "Gestão de ambientes críticos e redes.", details: ["Administração Active Directory.", "Segurança Mobile (Trend Mobile).", "Monitorização HikCentral."] },
+                { id: 3, role: "Assistente Administrativo", company: "Biancogres Grupo", period: "2021 - 2023", icon: "fas fa-file-invoice-dollar", color: "bg-indigo-500", desc: "Gestão operacional e financeira administrativa.", details: ["Controle de despesas industriais.", "Gestão de contratos e logística.", "Acompanhamento de orçamentos."] },
+                { id: 4, role: "Estagiária", company: "Biancogres Grupo", period: "2020 - 2021", icon: "fas fa-id-badge", color: "bg-slate-600", desc: "Apoio em processos e controle de incidentes.", details: ["Regulamentação de acessos.", "Gestão de incidentes físicos.", "Tickets de suporte Movidesk."] }
             ],
             projects: [
-                {
-                    id: "p1",
-                    title: "Curva em Protheus",
-                    category: "dev",
-                    icon: "fas fa-cogs",
-                    tech: ["AdvPL", "Protheus", "Lógica"],
-                    summary: "Estudo e aplicação prática em rotinas customizadas e gatilhos para otimizar processos.",
-                    impact: "Apoio na tradução de requisitos sistêmicos."
-                },
-                {
-                    id: "p2",
-                    title: "Extração de Dados & SQL",
-                    category: "data",
-                    icon: "fas fa-database",
-                    tech: ["SQL Server", "Dados", "Relatórios"],
-                    summary: "Criação de consultas para extração de informações estratégicas e suporte.",
-                    impact: "Fornecimento de dados limpos para a gestão."
-                },
-                {
-                    id: "p3",
-                    title: "Suporte de Infra",
-                    category: "infra",
-                    icon: "fas fa-server",
-                    tech: ["Active Directory", "VPN", "Cisco"],
-                    summary: "Apoio na administração de ambientes, VPN e resolução de chamados de rede.",
-                    impact: "Garantia de segurança e disponibilidade."
-                },
-                {
-                    id: "p4",
-                    title: "Segurança CFTV",
-                    category: "infra",
-                    icon: "fas fa-camera",
-                    tech: ["HikCentral", "Trend Mobile", "Projetos"],
-                    summary: "Participação na implantação de CFTV e gestão de dispositivos móveis corporativos.",
-                    impact: "Proteção do parque tecnológico."
-                }
+                { id: "p1", title: "Curva em Protheus", category: "dev", icon: "fas fa-cogs", tech: ["AdvPL", "Protheus"], summary: "Aperfeiçoamento prático em rotinas e gatilhos ERP.", impact: "Entrega de soluções customizadas." },
+                { id: "p2", title: "Extração & SQL Server", category: "data", icon: "fas fa-database", tech: ["SQL", "TSQL"], summary: "Criação de consultas estratégicas para BI.", impact: "Melhoria na tomada de decisão." },
+                { id: "p3", title: "Suporte de Infra", category: "infra", icon: "fas fa-server", tech: ["AD", "VPN"], summary: "Administração de acessos e redes críticas.", impact: "Garantia de uptime industrial." },
+                { id: "p4", title: "Segurança CFTV", category: "infra", icon: "fas fa-camera", tech: ["HikCentral", "CFTV"], summary: "Implantação e monitoria de segurança física.", impact: "Proteção do parque tecnológico." }
             ]
         };
 
-        const textToType = "Aperfeiçoando Protheus (AdvPL) & SQL | Engenharia de Software";
+        const textToType = "Aperfeiçoando Protheus (AdvPL) & SQL | MBA Engenharia de Software";
         let typeIndex = 0;
-        const speed = 40;
-
         function typeWriter() {
-            if (typeIndex < textToType.length) {
-                document.getElementById("typing-text").innerHTML += textToType.charAt(typeIndex);
-                typeIndex++;
-                setTimeout(typeWriter, speed);
+            const el = document.getElementById("typing-text");
+            if (el && typeIndex < textToType.length) {
+                el.innerHTML += textToType.charAt(typeIndex);
+                typeIndex++; setTimeout(typeWriter, 40);
             }
         }
 
@@ -856,181 +546,135 @@
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#94a3b8';
             
-            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
-            const radarGradient = ctxSkills.createLinearGradient(0, 0, 0, 400);
-            radarGradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
-            radarGradient.addColorStop(1, 'rgba(99, 102, 241, 0.1)');
+            const ctxSkills = document.getElementById('skillsChart');
+            if (ctxSkills) {
+                const radarGrad = ctxSkills.getContext('2d').createLinearGradient(0, 0, 0, 400);
+                radarGrad.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+                radarGrad.addColorStop(1, 'rgba(99, 102, 241, 0.1)');
 
-            new Chart(ctxSkills, {
-                type: 'radar',
-                data: {
-                    labels: ['Dev.', 'Banco de Dados', 'Infraestrutura', 'Segurança', 'Admin', 'ERP'],
-                    datasets: [{
-                        label: 'Nível',
-                        data: [80, 75, 80, 85, 90, 75],
-                        fill: true,
-                        backgroundColor: radarGradient,
-                        borderColor: '#60a5fa',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#0f172a',
-                        pointBorderColor: '#60a5fa'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                            pointLabels: {
-                                font: { size: window.innerWidth < 768 ? 9 : 11 },
-                                color: '#94a3b8'
-                            },
-                            ticks: { display: false, max: 100, min: 0 }
-                        }
+                new Chart(ctxSkills, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Dev.', 'SQL / Dados', 'Infra.', 'Segurança', 'Admin.', 'ERP'],
+                        datasets: [{
+                            label: 'Nível',
+                            data: [60, 60, 80, 85, 90, 75],
+                            fill: true,
+                            backgroundColor: radarGrad,
+                            borderColor: '#60a5fa',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#fff',
+                            pointRadius: window.innerWidth < 768 ? 3 : 4,
+                            tension: 0.35
+                        }]
                     },
-                    plugins: { legend: { display: false } }
-                }
-            });
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                min: 0, max: 100,
+                                angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.08)', circular: true },
+                                pointLabels: { font: { size: window.innerWidth < 768 ? 10 : 12 }, color: '#f8fafc' },
+                                ticks: { display: false, stepSize: 20 }
+                            }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
 
-            const ctxTech = document.getElementById('techChart').getContext('2d');
-            new Chart(ctxTech, {
-                type: 'bar',
-                data: {
-                    labels: ['SQL', 'AdvPL', 'Active Dir.', 'HikCentral', 'SAP'],
-                    datasets: [{
-                        label: 'Uso Recente',
-                        data: [80, 75, 80, 85, 50], 
-                        backgroundColor: [
-                            'rgba(59, 130, 246, 0.8)', 'rgba(99, 102, 241, 0.8)', 
-                            'rgba(245, 158, 11, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(100, 116, 139, 0.8)'
-                        ],
-                        borderRadius: 4,
-                        barThickness: window.innerWidth < 768 ? 12 : 'flex'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    scales: {
-                        x: { display: false, max: 100 },
-                        y: { 
-                            grid: { display: false },
-                            ticks: { font: { size: window.innerWidth < 768 ? 10 : 12 }, color: '#94a3b8' } 
-                        }
+            const ctxTech = document.getElementById('techChart');
+            if (ctxTech) {
+                new Chart(ctxTech, {
+                    type: 'bar',
+                    data: {
+                        labels: ['SQL Server', 'AdvPL', 'Active Dir.', 'HikCentral', 'SAP'],
+                        datasets: [{
+                            data: [60, 60, 80, 85, 50],
+                            backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(99, 102, 241, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(100, 116, 139, 0.8)'],
+                            borderRadius: 8,
+                            barThickness: window.innerWidth < 768 ? 16 : 28
+                        }]
                     },
-                    plugins: { legend: { display: false } }
-                }
-            });
+                    options: {
+                        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                        scales: { x: { display: false, max: 100 }, y: { grid: { display: false }, ticks: { color: '#cbd5e1' } } },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
         }
 
         function renderTimeline() {
             const container = document.getElementById('timeline-nodes-container');
-            const detailPanel = document.getElementById('timeline-detail-panel');
+            const panel = document.getElementById('timeline-detail-panel');
+            if(!container || !panel) return;
             container.innerHTML = '';
-
+            
             profileData.experience.forEach((job, index) => {
                 const node = document.createElement('div');
-                node.className = `timeline-node w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} absolute border-4 border-[#020617]`;
+                const baseClasses = `timeline-node w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white shadow-lg ${job.color} border-4 border-[#020617] shrink-0`;
+                node.className = baseClasses + (window.innerWidth >= 768 ? ' absolute' : ' relative');
                 
-                let topPos = profileData.experience.length > 1 ? (index / (profileData.experience.length - 1)) * 90 : 0;
-                node.style.top = `${topPos}%`;
-                node.innerHTML = `<i class="${job.icon} text-sm md:text-lg"></i>`;
+                if (window.innerWidth >= 768) {
+                    node.style.top = `${(index / (profileData.experience.length - 1)) * 90}%`;
+                }
                 
-                node.addEventListener('click', () => {
-                    document.querySelectorAll('.timeline-node').forEach(n => {
-                        n.classList.remove('active', 'border-blue-400');
-                        n.classList.add('border-[#020617]');
-                    });
-                    
+                node.innerHTML = `<i class="${job.icon} text-sm md:text-xl"></i>`;
+                node.onclick = () => {
+                    document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active', 'border-blue-400'));
                     node.classList.add('active', 'border-blue-400');
-                    node.classList.remove('border-[#020617]');
-                    
-                    detailPanel.style.opacity = '0';
-                    detailPanel.style.transform = 'translateY(10px) scale(0.98)';
+                    panel.style.opacity = '0';
+                    panel.style.transform = 'translateY(10px)';
                     
                     setTimeout(() => {
-                        detailPanel.innerHTML = `
-                            <div class="relative z-10">
-                                <div class="flex flex-col sm:flex-row sm:items-center mb-4 border-b border-slate-800 pb-4">
-                                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl ${job.color} shadow-lg text-white flex items-center justify-center mb-3 sm:mb-0 sm:mr-4 shrink-0">
-                                        <i class="${job.icon} text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg md:text-xl font-bold text-white leading-tight mb-1">${job.role}</h3>
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <p class="text-blue-400 font-semibold text-xs md:text-sm">${job.company}</p>
-                                            <span class="px-2 py-0.5 bg-slate-800 text-slate-300 text-[9px] md:text-[10px] font-semibold rounded flex items-center">
-                                                <i class="far fa-calendar-alt mr-1"></i>${job.period}
-                                            </span>
-                                        </div>
-                                    </div>
+                        panel.innerHTML = `
+                            <div class="relative z-10 animate-on-scroll is-visible">
+                                <div class="flex items-center gap-4 mb-5 border-b border-slate-800 pb-5">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 rounded-xl ${job.color} flex items-center justify-center shrink-0 shadow-lg"><i class="${job.icon} text-xl md:text-2xl"></i></div>
+                                    <div><h3 class="text-lg md:text-2xl font-bold text-white leading-tight">${job.role}</h3><p class="text-blue-400 text-xs md:text-sm font-semibold">${job.company} • ${job.period}</p></div>
                                 </div>
-                                <p class="text-slate-300 mb-4 text-xs md:text-sm font-light border-l-2 border-blue-500 pl-3">${job.description}</p>
-                                <div class="bg-slate-900/40 p-3 md:p-4 rounded-xl border border-slate-800/50">
-                                    <h4 class="font-bold text-white mb-2 text-[10px] md:text-xs uppercase"><i class="fas fa-tasks text-blue-500 mr-2"></i>Atividades</h4>
-                                    <ul class="space-y-1.5 md:space-y-2">
-                                        ${job.details.map(d => `
-                                            <li class="flex items-start">
-                                                <div class="mt-1 mr-2 w-2.5 h-2.5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                                                    <div class="w-1 h-1 rounded-full bg-emerald-400"></div>
-                                                </div>
-                                                <span class="text-slate-400 text-[10px] md:text-xs">${d}</span>
-                                            </li>`).join('')}
-                                    </ul>
+                                <p class="text-slate-300 mb-6 text-sm md:text-base border-l-2 border-blue-500 pl-4 font-light leading-relaxed">${job.desc}</p>
+                                <div class="bg-slate-900/40 p-4 md:p-6 rounded-2xl border border-slate-800/50">
+                                    <h4 class="text-[10px] md:text-xs font-bold text-white uppercase tracking-wider mb-4 flex items-center"><i class="fas fa-tasks text-blue-400 mr-2"></i>Atividades</h4>
+                                    <ul class="space-y-3">${job.details.map(d => `<li class="flex items-start text-slate-400 text-xs md:text-sm"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 mr-3 shrink-0"></div><span>${d}</span></li>`).join('')}</ul>
                                 </div>
-                            </div>
-                        `;
-                        detailPanel.style.opacity = '1';
-                        detailPanel.style.transform = 'translateY(0) scale(1)';
-
-                        // Micro-interação Mobile
+                            </div>`;
+                        panel.style.opacity = '1';
+                        panel.style.transform = 'translateY(0)';
                         if (window.innerWidth < 768) {
-                            setTimeout(() => {
-                                detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                            }, 100);
+                             setTimeout(() => { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
                         }
                     }, 250);
-                });
-
+                };
                 container.appendChild(node);
             });
-
-            setTimeout(() => { container.children[0].click(); }, 600);
+            setTimeout(() => { if(container.children[0]) container.children[0].click(); }, 500);
         }
 
         function renderProjects(filter = 'all') {
             const grid = document.getElementById('projects-grid');
+            if(!grid) return;
             grid.innerHTML = '';
-            
             const filtered = filter === 'all' ? profileData.projects : profileData.projects.filter(p => p.category === filter);
-
             filtered.forEach((project, index) => {
                 const card = document.createElement('div');
                 card.className = `glass-card rounded-2xl overflow-hidden group flex flex-col animate-on-scroll is-visible`;
                 card.style.animationDelay = `${index * 100}ms`;
-                
                 const badgeColor = project.category === 'dev' ? 'bg-blue-500/10 text-blue-400' : project.category === 'data' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-amber-500/10 text-amber-400';
-                
                 card.innerHTML = `
-                    <div class="p-5 md:p-6 flex-grow relative">
-                        <div class="flex justify-between items-start mb-4 relative z-10">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-800 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:bg-blue-600 transition-all">
-                                <i class="${project.icon} text-sm md:text-base"></i>
-                            </div>
+                    <div class="p-6 md:p-8 flex-grow relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-6 relative z-10">
+                            <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:border-blue-500/50 transition-all duration-300"><i class="${project.icon} text-lg md:text-xl"></i></div>
+                            <span class="px-2 md:px-3 py-1 ${badgeColor} border border-white/5 text-[10px] md:text-xs rounded-full font-bold uppercase tracking-wide shadow-sm">${project.category}</span>
                         </div>
-                        <h3 class="text-base md:text-lg font-bold text-white mb-2">${project.title}</h3>
-                        <p class="text-slate-400 mb-4 text-xs md:text-sm font-light">${project.summary}</p>
-                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-                            <h4 class="text-[9px] font-bold text-slate-500 uppercase mb-1">Impacto</h4>
-                            <p class="text-[10px] md:text-xs text-slate-300">${project.impact}</p>
-                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 relative z-10">${project.title}</h3>
+                        <p class="text-slate-400 mb-5 leading-relaxed font-light text-sm md:text-base relative z-10">${project.summary}</p>
                     </div>
-                    <div class="bg-slate-900/80 px-5 py-3 border-t border-slate-800/80 mt-auto">
-                        <div class="flex flex-wrap gap-1.5">
-                            ${project.tech.map(t => `<span class="px-2 py-1 text-[9px] font-medium bg-slate-800 rounded text-slate-300">${t}</span>`).join('')}
+                    <div class="bg-slate-900/80 px-6 md:px-8 py-4 border-t border-slate-800/80 mt-auto">
+                        <div class="flex flex-wrap gap-1.5 md:gap-2">
+                            ${project.tech.map(t => `<span class="inline-block px-2.5 py-1 text-[10px] md:text-xs font-medium bg-slate-800 border border-slate-700 rounded-lg text-slate-300 shadow-sm">${t}</span>`).join('')}
                         </div>
                     </div>
                 `;
@@ -1038,7 +682,67 @@
             });
         }
 
-        function setupFilters() {
+        // Gemini AI Setup
+        const apiKey = "";
+        const sysMsg = "Aja como assistente da Sara Marina Chuina. Sara: Analista Dev Jr no Grupo Biancogres. Tech: AdvPL, SQL Server, Protheus. MBA Engenharia de Software em curso. Responda em Português, seja profissional e direta (máx 3 frases).";
+
+        async function chatIA(txt) {
+            if(!apiKey) return "Simulação: A Sara domina AdvPL, SQL e possui sólida base técnica e estratégica!";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const body = { contents: [{ parts: [{ text: txt }] }], systemInstruction: { parts: [{ text: sysMsg }] } };
+            try {
+                const res = await fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+                const json = await res.json();
+                return json.candidates?.[0]?.content?.parts?.[0]?.text || "Desculpe, tente novamente.";
+            } catch { return "Serviço ocupado no momento."; }
+        }
+
+        document.getElementById('ai-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const inp = document.getElementById('ai-input');
+            const chat = document.getElementById('chat-container');
+            const btn = document.getElementById('ai-submit-btn');
+            const userTxt = inp.value; if(!userTxt) return;
+            inp.value = ''; btn.disabled = true;
+            chat.insertAdjacentHTML('beforeend', `<div class="self-end bg-blue-600 p-3 rounded-2xl rounded-tr-sm text-xs text-white max-w-[85%] animate-on-scroll is-visible">${userTxt}</div>`);
+            chat.scrollTop = chat.scrollHeight;
+            const res = await chatIA(userTxt);
+            chat.insertAdjacentHTML('beforeend', `<div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shrink-0"><i class="fas fa-robot text-white text-xs"></i></div><div class="bg-slate-800 p-3 rounded-2xl rounded-tl-sm text-xs text-slate-200 max-w-[85%] leading-relaxed">${res}</div></div>`);
+            chat.scrollTop = chat.scrollHeight; btn.disabled = false;
+        };
+
+        window.onscroll = () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            
+            const progress = document.getElementById("scroll-progress");
+            if (progress) progress.style.width = (winScroll / height) * 100 + "%";
+
+            const btn = document.getElementById("back-to-top");
+            if (btn) {
+                if (winScroll > 400) {
+                    btn.classList.remove("opacity-0", "translate-y-10", "pointer-events-none");
+                    btn.classList.add("opacity-100", "translate-y-0");
+                } else {
+                    btn.classList.add("opacity-0", "translate-y-10", "pointer-events-none");
+                    btn.classList.remove("opacity-100", "translate-y-0");
+                }
+            }
+        };
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        document.getElementById('mobile-menu-btn').onclick = toggleMobileMenu;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(typeWriter, 500); 
+            initCharts();
+            renderTimeline();
+            renderProjects();
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1051,184 +755,10 @@
                     renderProjects(btn.dataset.filter);
                 });
             });
-        }
 
-        function setupIntersectionObserver() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                        entry.target.classList.remove('opacity-0', 'translate-y-[40px]');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-        }
-
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            const navHeight = document.querySelector('nav').offsetHeight;
-            const elementPosition = element.getBoundingClientRect().top;
-            window.scrollTo({ top: elementPosition + window.pageYOffset - navHeight, behavior: "smooth" });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-
-        function handleScrollEvents() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("scroll-progress").style.width = (winScroll / height) * 100 + "%";
-
-            const backToTopBtn = document.getElementById("back-to-top");
-            if (winScroll > 500) {
-                backToTopBtn.classList.remove("opacity-0", "translate-y-10", "pointer-events-none");
-                backToTopBtn.classList.add("opacity-100", "translate-y-0");
-            } else {
-                backToTopBtn.classList.add("opacity-0", "translate-y-10", "pointer-events-none");
-                backToTopBtn.classList.remove("opacity-100", "translate-y-0");
-            }
-        }
-
-        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
-        window.addEventListener('scroll', handleScrollEvents);
-
-        // --- GEMINI AI INTEGRATION ---
-        // A chave API é fornecida de forma segura no ambiente de execução.
-        const apiKey = ""; 
-
-        const systemInstruction = `
-            Você é a Assistente Virtual da Sara Marina Chuina. O seu papel é responder de forma curta, profissional e amigável a recrutadores que estão a visualizar o portfólio dela.
-            Informações sobre a Sara:
-            - Atualmente é Analista de Desenvolvimento de Sistemas Júnior no Grupo Biancogres (Serra, ES).
-            - Foca-se em ERP Protheus, programando em AdvPL e fazendo consultas avançadas em SQL Server.
-            - Teve uma progressão de carreira impressionante no Grupo Biancogres: começou como Estagiária, passou a Assistente Administrativo, depois Analista de Infraestrutura de TI (onde administrava Active Directory, VPN, HikCentral e Trend Mobile), e finalmente alcançou a sua vocação em Desenvolvimento de Sistemas (Junho de 2025).
-            - Formação: Bacharelato em Administração (concluído em 2022), Bacharelato em Sistemas de Informação (concluído em 07/2025), MBA em Segurança da Informação (concluído em 09/2025) e atualmente estuda MBA em Engenharia de Software (previsão 08/2026).
-            - Ela é altamente analítica, foca-se na eficiência técnica e tem uma excelente base em segurança e infraestrutura.
-            Regras de Resposta:
-            - Responda SEMPRE em Português.
-            - Seja concisa, máximo de 3-4 frases curtas.
-            - Fale na primeira pessoa do plural ou na terceira pessoa, mas sempre representando os interesses profissionais da Sara. (Exemplo: "A Sara é especialista em...", "A jornada da Sara mostra...").
-            - Se a pergunta não for sobre a carreira, habilidades ou estudos da Sara, responda educadamente que só pode ajudar com assuntos relacionados ao perfil profissional dela.
-        `;
-
-        async function fetchGeminiResponse(userPrompt, retries = 5) {
-            if (!apiKey) {
-                 return "Modo de visualização offline ou sem chave API. (Simulação: A Sara domina AdvPL, SQL Server e tem forte base em Infraestrutura!)";
-            }
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: userPrompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            for (let attempt = 0; attempt < retries; attempt++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        if (response.status === 429) throw new Error("Rate limit exceeded");
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    return result.candidates?.[0]?.content?.parts?.[0]?.text || "Desculpe, não consegui formular uma resposta no momento.";
-                } catch (error) {
-                    if (attempt === retries - 1) return "Desculpe, o meu serviço de IA está com alta demanda no momento. Por favor, tente contactar a Sara pelo LinkedIn ou WhatsApp.";
-                    await new Promise(res => setTimeout(res, Math.pow(2, attempt) * 1000)); // Exponential backoff
-                }
-            }
-        }
-
-        document.getElementById('ai-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const inputEl = document.getElementById('ai-input');
-            const chatContainer = document.getElementById('chat-container');
-            const userText = inputEl.value.trim();
-            const submitBtn = document.getElementById('ai-submit-btn');
-
-            if (!userText) return;
-
-            // Bloqueia input temporariamente
-            inputEl.value = '';
-            inputEl.disabled = true;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-            // Add User Message
-            const userMsgHtml = `
-                <div class="flex items-start justify-end gap-3 w-[90%] md:w-[80%] self-end">
-                    <div class="bg-blue-600 rounded-2xl rounded-tr-sm p-3 md:p-4 shadow-sm">
-                        <p class="text-sm md:text-base text-white">${userText}</p>
-                    </div>
-                    <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center shrink-0 shadow-sm border border-slate-600">
-                        <i class="fas fa-user text-slate-300 text-xs"></i>
-                    </div>
-                </div>
-            `;
-            chatContainer.insertAdjacentHTML('beforeend', userMsgHtml);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // Add Loader
-            const loaderId = 'loader-' + Date.now();
-            const loaderHtml = `
-                <div id="${loaderId}" class="flex items-start gap-3 w-[90%] md:w-[80%]">
-                    <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 shadow-lg">
-                        <i class="fas fa-robot text-white text-xs"></i>
-                    </div>
-                    <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-4 shadow-sm flex items-center h-12">
-                        <div class="typing-loader"><span></span><span></span><span></span></div>
-                    </div>
-                </div>
-            `;
-            chatContainer.insertAdjacentHTML('beforeend', loaderHtml);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // Call API
-            const responseText = await fetchGeminiResponse(userText);
-
-            // Remove Loader & Add AI Response
-            document.getElementById(loaderId).remove();
-            
-            // Simples formatação de markdown básico para HTML (negritos)
-            const formattedResponse = responseText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-            const aiMsgHtml = `
-                <div class="flex items-start gap-3 w-[90%] md:w-[80%]">
-                    <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 shadow-lg">
-                        <i class="fas fa-robot text-white text-xs"></i>
-                    </div>
-                    <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm p-3 md:p-4 shadow-sm">
-                        <p class="text-sm md:text-base text-slate-200 leading-relaxed">${formattedResponse}</p>
-                    </div>
-                </div>
-            `;
-            chatContainer.insertAdjacentHTML('beforeend', aiMsgHtml);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // Reativa input
-            inputEl.disabled = false;
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane text-sm"></i>';
-            inputEl.focus();
+            const obs = new IntersectionObserver(ents => ents.forEach(e => { if(e.isIntersecting) e.target.classList.add('is-visible') }), {threshold: 0.1});
+            document.querySelectorAll('.animate-on-scroll').forEach(el => obs.observe(el));
         });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(typeWriter, 500); 
-            initCharts();
-            renderTimeline();
-            setupFilters();
-            setupIntersectionObserver();
-        });
-
     </script>
 </body>
 </html>
